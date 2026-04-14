@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "analyze-topics": "npx tsx scripts/analyze-topics.ts",
+    "classify-topics": "npx tsx scripts/classify-topics-ai.ts",
+    "reset-demo": "curl -s -X POST http://localhost:3000/api/reset-demo | cat"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",

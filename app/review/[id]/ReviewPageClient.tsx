@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, MapPin, Star } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, MapPin, Star, BarChart3 } from "lucide-react";
 import ReviewFlow from "@/components/ReviewFlow";
 
 interface ReviewPageClientProps {
@@ -55,16 +56,22 @@ export default function ReviewPageClient({
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-2xl mx-auto px-6 py-3 flex items-center justify-between">
           <a href="/" onClick={handleHomeClick} className="flex items-center gap-2.5">
-            <span className="font-bold text-[#1E243A] text-sm">Ask What Matters</span>
+            <span className="font-bold text-[#003580] text-sm">Ask What Matters</span>
           </a>
-          <a
-            href="/"
-            onClick={handleHomeClick}
-            className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#1E243A] transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            Change hotel
-          </a>
+          <div className="flex items-center gap-4">
+            <Link href="/manager" className="flex items-center gap-1.5 text-xs font-medium text-gray-400 hover:text-gray-600 transition-colors">
+              <BarChart3 className="w-3.5 h-3.5" />
+              Manager View
+            </Link>
+            <a
+              href="/"
+              onClick={handleHomeClick}
+              className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#1E243A] transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Change hotel
+            </a>
+          </div>
         </div>
       </header>
 

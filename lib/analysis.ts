@@ -1,5 +1,39 @@
+import crypto from "crypto";
+import fs from "fs";
+import path from "path";
 import { Property, Review, parseReviewDate } from "./data";
 import { TOPICS, Topic, classifyText } from "./topics";
+
+// ── AI topic classification cache ─────────────────────────────────────────────
+// Populated by scripts/classify-topics-ai.ts. Falls back to keyword matching
+// for any review not present (live reviews, or if the script hasn't been run).
+
+let _aiClassifications: Record<string, string[]> | null = null;
+
+function getAiClassifications(): Record<string, string[]> {
+  if (_aiClassifications !== null) return _aiClassifications;
+  try {
+    const filePath = path.join(process.cwd(), "lib", "topic-classifications.json");
+    _aiClassifications = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  } catch {
+    _aiClassifications = {}; // file not generated yet — use keyword matching only
+  }
+  return _aiClassifications!;
+}
+
+function hashText(text: string): string {
+  return crypto.createHash("sha256").update(text.trim()).digest("hex").slice(0, 16);
+}
+
+/** Returns the set of topic IDs for a review — AI cache first, keyword fallback. */
+function classifyReview(reviewText: string): Set<string> {
+  const classifications = getAiClassifications();
+  const hash = hashText(reviewText);
+  if (classifications[hash]) {
+    return new Set(classifications[hash]);
+  }
+  return classifyText(reviewText); // fallback for uncached reviews
+}
 
 export interface TopicAnalysis {
   topicId: string;
@@ -148,6 +182,11 @@ function detectSentimentShift(reviews: Review[], topicSets: Set<string>[], topic
 // Module-level cache - populated once per cold start
 const _analysisCache = new Map<string, PropertyAnalysis>();
 
+/** Call after adding a live review so the next analyzeProperty call recomputes. */
+export function invalidateAnalysisCache(propertyId: string): void {
+  _analysisCache.delete(propertyId);
+}
+
 export function analyzeProperty(property: Property, reviews: Review[]): PropertyAnalysis {
   const cached = _analysisCache.get(property.eg_property_id);
   if (cached) return cached;
@@ -155,7 +194,8 @@ export function analyzeProperty(property: Property, reviews: Review[]): Property
   const reviewsWithText = reviews.filter((r) => r.review_text && r.review_text.trim().length > 0);
 
   // Pre-classify every review once (not once per topic)
-  const reviewTopicSets = reviewsWithText.map((r) => classifyText(r.review_text));
+  // Uses AI cache when available, falls back to keyword matching
+  const reviewTopicSets = reviewsWithText.map((r) => classifyReview(r.review_text));
 
   const topics: TopicAnalysis[] = TOPICS.map((topic) => {
     const isRelevant = isPropertyAmenityRelevant(property, topic);

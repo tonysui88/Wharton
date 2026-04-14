@@ -163,7 +163,15 @@ export function loadReviews(): Review[] {
 }
 
 export function getReviewsForProperty(propertyId: string): Review[] {
-  return loadReviews().filter((r) => r.eg_property_id === propertyId);
+  const csvReviews = loadReviews().filter((r) => r.eg_property_id === propertyId);
+
+  // Merge in any live reviews submitted during this server session
+  const { reviewStore } = require("./store") as typeof import("./store");
+  const liveReviews = reviewStore
+    .getLiveReviewsForProperty(propertyId)
+    .map((r) => reviewStore.toReviewShape(r) as Review);
+
+  return [...csvReviews, ...liveReviews];
 }
 
 export function parseReviewDate(dateStr: string): Date {

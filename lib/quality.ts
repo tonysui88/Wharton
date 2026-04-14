@@ -15,23 +15,12 @@ export interface QualityResult {
 export function checkTextQuality(text: string): QualityResult {
   const trimmed = text.trim();
 
-  if (trimmed.length < 15) {
-    return {
-      isValid: false,
-      score: 0,
-      feedback: "Please write at least a sentence or two about your stay.",
-    };
+  // Empty is handled upstream (field is optional)
+  if (trimmed.length === 0) {
+    return { isValid: true, score: 0, feedback: "" };
   }
 
   const words = trimmed.split(/\s+/).filter((w) => w.length > 0);
-
-  if (words.length < 4) {
-    return {
-      isValid: false,
-      score: 0,
-      feedback: "Please share a bit more about your experience.",
-    };
-  }
 
   const lowerNoSpace = trimmed.toLowerCase().replace(/\s+/g, "");
   const uniqueChars = new Set(lowerNoSpace).size;
@@ -65,11 +54,12 @@ export function checkTextQuality(text: string): QualityResult {
   }
 
   // Words with no vowels that are longer than 3 chars → keyboard mash
+  // Only apply when there are enough words to judge
   const alphaWords = words.map((w) => w.replace(/[^a-zA-Z]/g, ""));
   const noVowelLong = alphaWords.filter(
     (w) => w.length > 3 && !/[aeiouAEIOU]/.test(w)
   );
-  if (noVowelLong.length > words.length * 0.45 && words.length > 3) {
+  if (noVowelLong.length > words.length * 0.45 && words.length > 4) {
     return {
       isValid: false,
       score: 0.1,
@@ -77,17 +67,17 @@ export function checkTextQuality(text: string): QualityResult {
     };
   }
 
-  // Very low lexical diversity (same word repeated e.g. "good good good good")
+  // Very low lexical diversity (same word repeated) — only flag when long enough
   const uniqueWords = new Set(words.map((w) => w.toLowerCase().replace(/[^a-z]/g, "")));
-  if (uniqueWords.size < Math.max(2, words.length * 0.35)) {
+  if (words.length > 5 && uniqueWords.size < Math.max(2, words.length * 0.35)) {
     return {
       isValid: false,
       score: 0.15,
-      feedback: "Please write a more detailed and varied review about your experience.",
+      feedback: "Please write a more varied review about your experience.",
     };
   }
 
-  // Passed - compute a quality score
+  // Passed — compute a quality score
   const lengthBonus = Math.min(0.3, words.length / 50);
   const diversityBonus = Math.min(0.2, (uniqueChars - 5) / 25);
   const vocabBonus = uniqueWords.size > 12 ? 0.1 : 0;

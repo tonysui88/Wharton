@@ -12,6 +12,7 @@ import {
   ArrowLeft, MapPin, AlertTriangle, Clock,
   TrendingDown, PenLine, BarChart3, MessageSquare,
 } from "lucide-react";
+import ManagerNotifications from "@/components/ManagerNotifications";
 
 export const dynamic = "force-dynamic";
 
@@ -67,10 +68,11 @@ export default async function PropertyDetailPage({ params }: Props) {
               <PenLine className="w-3.5 h-3.5" />
               Traveler Review Flow
             </Link>
-            <Link href="/portfolio" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+            <Link href="/manager" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
               <ArrowLeft className="w-4 h-4" />
-              Portfolio
+              All Properties
             </Link>
+            <ManagerNotifications />
           </div>
         </div>
       </header>

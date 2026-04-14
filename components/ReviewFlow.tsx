@@ -51,6 +51,7 @@ export default function ReviewFlow({
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [qualityError, setQualityError] = useState<string | null>(null);
   const [questions, setQuestions] = useState<FollowUpQuestion[]>([]);
+  const [coveredTopicIds, setCoveredTopicIds] = useState<string[]>([]);
   const [answers, setAnswers] = useState<AnswerPayload[]>([]);
   const [scoreResult, setScoreResult] = useState<{
     previousScore: number;
@@ -95,6 +96,7 @@ export default function ReviewFlow({
         const { coveredTopics } = await analyzeRes.json();
         coveredIds.push(...(coveredTopics ?? []).map((t: { id: string }) => t.id));
       }
+      setCoveredTopicIds(coveredIds);
 
       const genRes = await fetch("/api/generate-questions", {
         method: "POST",
@@ -144,11 +146,16 @@ export default function ReviewFlow({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           propertyId,
-          answers: answers.map(({ topicId, answer, type }) => ({
+          answers: answers.map(({ topicId, topicLabel, answer, type }) => ({
             topicId,
+            topicLabel,
             answer,
             type,
           })),
+          coveredTopicIds,
+          overallRating,
+          reviewText,
+          travelerName: "Demo User",
         }),
       });
       const data = await res.json();

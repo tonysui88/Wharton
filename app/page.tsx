@@ -1,27 +1,11 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { loadProperties, loadReviews } from "@/lib/data";
-import { MapPin, Star, ArrowRight, BarChart3, Sparkles } from "lucide-react";
+import { MapPin, ArrowRight, BarChart3, Sparkles } from "lucide-react";
 import { generateHotelDisplayName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
-function StarRow({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={`w-3 h-3 ${
-            i < Math.round(rating)
-              ? "fill-[#FEBF4F] text-[#FEBF4F]"
-              : "fill-gray-200 text-gray-200"
-          }`}
-        />
-      ))}
-    </div>
-  );
-}
 
 function LoadingSkeleton() {
   return (
@@ -66,11 +50,6 @@ async function HotelList() {
           style={{ animationDelay: `${i * 0.04}s` }}
         >
           <div className="flex-1 min-w-0">
-            {hotel.starRating > 0 && (
-              <div className="mb-0.5">
-                <StarRow rating={hotel.starRating} />
-              </div>
-            )}
             <p className="text-sm font-semibold text-[#1E243A] truncate">
               {hotel.name}
             </p>
@@ -108,17 +87,17 @@ export default function HomePage() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+          <Link href="/" className="flex items-center gap-2.5">
             <div
               className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm"
-              style={{ background: "#FEBF4F", color: "#1E243A" }}
+              style={{ background: "#FCDB32", color: "#1E243A" }}
             >
               E
             </div>
             <span className="font-bold text-[#1E243A] text-base">
               Ask What Matters
             </span>
-          </div>
+          </Link>
           <Link
             href="/portfolio"
             className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#1E243A] transition-colors"
@@ -130,7 +109,7 @@ export default function HomePage() {
       </header>
 
       {/* Hero */}
-      <div style={{ background: "linear-gradient(160deg, #FEBF4F 0%, #FDD47C 60%, #FFF3CD 100%)" }}>
+      <div style={{ background: "linear-gradient(160deg, #FCDB32 0%, #FCDB32 60%, #FDE97A 100%)" }}>
         <div className="max-w-3xl mx-auto px-6 py-14 text-center">
           <div
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-5"

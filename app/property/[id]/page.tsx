@@ -60,14 +60,14 @@ export default async function PropertyDetailPage({ params }: Props) {
       {/* Header */}
       <header style={{ background: "#1E243A" }} className="sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm"
               style={{ background: "#FEBF4F", color: "#1E243A" }}>E</div>
             <div>
               <span className="text-white font-bold text-sm">Ask What Matters</span>
               <span className="text-gray-400 text-xs block">Hotel Manager View</span>
             </div>
-          </div>
+          </Link>
           <div className="flex items-center gap-3">
             <Link
               href={`/review/${id}`}

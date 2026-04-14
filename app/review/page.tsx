@@ -41,11 +41,11 @@ export default function ReviewLandingPage() {
       {/* Header */}
       <header style={{ background: "#1a1a2e" }} className="sticky top-0 z-50">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
               style={{ background: "linear-gradient(135deg, #ff6b35, #f59e0b)" }}>E</div>
             <span className="text-white font-bold text-sm">Ask What Matters</span>
-          </div>
+          </Link>
           <Link href="/" className="text-xs text-gray-400 hover:text-white transition-colors">
             Hotel Manager View →
           </Link>

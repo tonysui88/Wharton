@@ -114,7 +114,7 @@ export default function PortfolioPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+          <Link href="/" className="flex items-center gap-2.5">
             <div
               className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm"
               style={{ background: "#FEBF4F", color: "#1E243A" }}
@@ -125,7 +125,7 @@ export default function PortfolioPage() {
               <span className="font-bold text-[#1E243A] text-base">Ask What Matters</span>
               <span className="text-gray-400 text-xs block">Hotel Manager View</span>
             </div>
-          </div>
+          </Link>
           <Link
             href="/"
             className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#1E243A] transition-colors"

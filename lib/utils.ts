@@ -35,7 +35,6 @@ export function generateHotelDisplayName(
   else if (/\baparthotel\b|apartment/.test(desc)) type = "Aparthotel";
 
   const location = [city, country].filter(Boolean).join(", ");
-  const stars = starRating > 0 ? `${Math.round(starRating)}-Star ` : "";
 
-  return `${stars}${type} in ${location}`;
+  return `${type} in ${location}`;
 }

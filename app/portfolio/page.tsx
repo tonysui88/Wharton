@@ -4,6 +4,7 @@ import { loadProperties, loadReviews } from "@/lib/data";
 import { analyzeProperty } from "@/lib/analysis";
 import PropertyCard from "@/components/PropertyCard";
 import { BarChart3, Sparkles, TrendingUp, ArrowLeft } from "lucide-react";
+import { generateHotelDisplayName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -36,10 +37,10 @@ async function PropertyGrid() {
 
     return {
       id: property.eg_property_id,
+      propertyName: generateHotelDisplayName(property.property_description, property.city, property.country, property.star_rating),
       city: property.city,
       country: property.country,
       province: property.province,
-      star_rating: property.star_rating,
       guestrating_avg_expedia: property.guestrating_avg_expedia,
       popular_amenities_list: property.popular_amenities_list,
       property_description: property.property_description,
@@ -48,7 +49,7 @@ async function PropertyGrid() {
       topGaps: analysis.topGaps,
       topTopics: analysis.topics
         .filter((t) => t.isRelevant)
-        .sort((a, b) => b.coverageScore - a.coverageScore)
+        .sort((a, b) => a.coverageScore - b.coverageScore)
         .slice(0, 5),
     };
   });
@@ -59,7 +60,6 @@ async function PropertyGrid() {
     cards.reduce((s, c) => s + c.knowledgeHealthScore, 0) / cards.length
   );
   const totalReviews = cards.reduce((s, c) => s + c.totalReviews, 0);
-  const highGapCount = cards.filter((c) => c.knowledgeHealthScore < 50).length;
 
   return (
     <>
@@ -80,8 +80,8 @@ async function PropertyGrid() {
           {
             icon: <Sparkles className="w-5 h-5 text-amber-500" />,
             value: avgScore,
-            label: "Avg Health Score",
-            sub: `${highGapCount} need attention`,
+            label: "Avg Knowledge Health Score",
+            sub: "across all properties",
           },
         ].map((stat, i) => (
           <div
@@ -115,12 +115,6 @@ export default function PortfolioPage() {
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm"
-              style={{ background: "#FEBF4F", color: "#1E243A" }}
-            >
-              E
-            </div>
             <div>
               <span className="font-bold text-[#1E243A] text-base">Ask What Matters</span>
               <span className="text-gray-400 text-xs block">Hotel Manager View</span>

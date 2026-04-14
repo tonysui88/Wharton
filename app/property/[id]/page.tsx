@@ -7,8 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import KnowledgeHealthScore from "@/components/KnowledgeHealthScore";
 import TopicCoverageMap from "@/components/TopicCoverageMap";
 import RatingAnalytics from "@/components/RatingAnalytics";
+import { generateHotelDisplayName } from "@/lib/utils";
 import {
-  ArrowLeft, MapPin, Star, AlertTriangle, Clock,
+  ArrowLeft, MapPin, AlertTriangle, Clock,
   TrendingDown, PenLine, BarChart3, MessageSquare,
 } from "lucide-react";
 
@@ -18,15 +19,6 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-function StarRow({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} className={`w-4 h-4 ${i < Math.round(rating) ? "fill-amber-400 text-amber-400" : "fill-gray-200 text-gray-200"}`} />
-      ))}
-    </div>
-  );
-}
 
 export default async function PropertyDetailPage({ params }: Props) {
   const { id } = await params;
@@ -38,12 +30,12 @@ export default async function PropertyDetailPage({ params }: Props) {
   const reviews = getReviewsForProperty(id);
   const analysis = analyzeProperty(property, reviews);
 
-  const propertyName = property.property_description
-    .replace(/\|MASK\|/g, "")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .slice(0, 60);
+  const propertyName = generateHotelDisplayName(
+    property.property_description,
+    property.city,
+    property.country,
+    property.star_rating
+  );
 
   const location = [property.city, property.province, property.country].filter(Boolean).join(", ");
   const healthColor = getKnowledgeHealthColor(analysis.knowledgeHealthScore);
@@ -61,8 +53,6 @@ export default async function PropertyDetailPage({ params }: Props) {
       <header style={{ background: "#1E243A" }} className="sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm"
-              style={{ background: "#FEBF4F", color: "#1E243A" }}>E</div>
             <div>
               <span className="text-white font-bold text-sm">Ask What Matters</span>
               <span className="text-gray-400 text-xs block">Hotel Manager View</span>
@@ -95,12 +85,6 @@ export default async function PropertyDetailPage({ params }: Props) {
                   Hotel Manager Analytics
                 </Badge>
               </div>
-              {property.star_rating > 0 && (
-                <div className="flex items-center gap-2 mb-1">
-                  <StarRow rating={property.star_rating} />
-                  <span className="text-gray-400 text-sm">{property.star_rating}-star property</span>
-                </div>
-              )}
               <h1 className="text-2xl font-extrabold text-white mb-1 leading-tight">
                 {propertyName || "Hotel Property"}
               </h1>

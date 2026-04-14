@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import KnowledgeHealthScore from "./KnowledgeHealthScore";
-import { MapPin, Star, MessageSquare, TrendingUp } from "lucide-react";
+import { MapPin, MessageSquare, TrendingUp } from "lucide-react";
 
 interface TopGap {
   topicId: string;
@@ -39,10 +39,10 @@ const URGENCY_STYLE: Record<UrgencyTier, { label: string; color: string; bg: str
 
 interface PropertyCardProps {
   id: string;
+  propertyName: string;
   city: string;
   country: string;
   province?: string;
-  star_rating: number;
   guestrating_avg_expedia: number;
   popular_amenities_list: string[];
   property_description: string;
@@ -54,18 +54,6 @@ interface PropertyCardProps {
 }
 
 
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="flex items-center gap-0.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={`w-3 h-3 ${i < Math.round(rating) ? "fill-amber-400 text-amber-400" : "fill-gray-200 text-gray-200"}`}
-        />
-      ))}
-    </div>
-  );
-}
 
 function SentimentDot({ sentiment }: { sentiment: string }) {
   const colors: Record<string, string> = {
@@ -90,10 +78,10 @@ function getHealthBgColor(score: number) {
 
 export default function PropertyCard({
   id,
+  propertyName,
   city,
   country,
   province,
-  star_rating,
   guestrating_avg_expedia,
   popular_amenities_list,
   property_description,
@@ -145,12 +133,7 @@ export default function PropertyCard({
       {/* Header */}
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <StarRating rating={star_rating} />
-            {star_rating > 0 && (
-              <span className="text-xs text-gray-400">{star_rating}★</span>
-            )}
-          </div>
+          <p className="text-sm font-semibold text-[#1a1a2e] truncate mb-0.5">{propertyName}</p>
           <div className="flex items-center gap-1 text-sm text-gray-500">
             <MapPin className="w-3 h-3 flex-shrink-0" />
             <span className="truncate">{location}</span>
@@ -175,7 +158,7 @@ export default function PropertyCard({
             <span className="text-sm font-medium" style={{ color: "#ff6b35" }}>
               {guestrating_avg_expedia.toFixed(1)}
             </span>
-            <span className="text-xs text-gray-400">/ 10</span>
+            <span className="text-xs text-gray-400">/ 10 Expedia Guest Rating</span>
           </div>
         )}
       </div>

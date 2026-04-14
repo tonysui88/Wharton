@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { loadProperties, loadReviews } from "@/lib/data";
-import { MapPin, ArrowRight, BarChart3, Sparkles } from "lucide-react";
+import { MapPin, ArrowRight, BarChart3 } from "lucide-react";
 import { generateHotelDisplayName } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -88,12 +88,6 @@ export default function HomePage() {
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-6 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm"
-              style={{ background: "#FCDB32", color: "#1E243A" }}
-            >
-              E
-            </div>
             <span className="font-bold text-[#1E243A] text-base">
               Ask What Matters
             </span>
@@ -111,18 +105,7 @@ export default function HomePage() {
       {/* Hero */}
       <div style={{ background: "linear-gradient(160deg, #FCDB32 0%, #FCDB32 60%, #FDE97A 100%)" }}>
         <div className="max-w-3xl mx-auto px-6 py-14 text-center">
-          <div
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-5"
-            style={{
-              background: "rgba(30,36,58,0.08)",
-              color: "#1E243A",
-              border: "1px solid rgba(30,36,58,0.12)",
-            }}
-          >
-            <Sparkles className="w-3 h-3" />
-            Wharton Hack-AI-thon 2026 · Expedia Group
-          </div>
-          <h1 className="text-4xl font-extrabold text-[#1E243A] leading-tight mb-4">
+<h1 className="text-4xl font-extrabold text-[#1E243A] leading-tight mb-4">
             How was your stay?
           </h1>
           <p className="text-[#1E243A]/70 text-base leading-relaxed max-w-md mx-auto">

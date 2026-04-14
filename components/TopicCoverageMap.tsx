@@ -53,8 +53,11 @@ export default function TopicCoverageMap({ topics }: TopicCoverageMapProps) {
       {/* Not applicable */}
       {irrelevantTopics.length > 0 && (
         <div>
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-2">
-            Not applicable to this property
+          <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
+            Not tracked for this property
+          </p>
+          <p className="text-xs text-gray-400 mb-2">
+            These topics are skipped because this property does not advertise the relevant amenity or service (e.g. no spa, no pool, no eco certification). Collecting reviews on features a hotel doesn&apos;t offer would mislead future guests.
           </p>
           <div className="flex flex-wrap gap-2">
             {irrelevantTopics.map((t) => (

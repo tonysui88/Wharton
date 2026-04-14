@@ -55,12 +55,6 @@ export default function ReviewPageClient({
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-2xl mx-auto px-6 py-3 flex items-center justify-between">
           <a href="/" onClick={handleHomeClick} className="flex items-center gap-2.5">
-            <div
-              className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm"
-              style={{ background: "#FCDB32", color: "#1E243A" }}
-            >
-              E
-            </div>
             <span className="font-bold text-[#1E243A] text-sm">Ask What Matters</span>
           </a>
           <a
@@ -78,12 +72,6 @@ export default function ReviewPageClient({
       <div style={{ background: "linear-gradient(160deg, #FCDB32 0%, #FCDB32 60%, #FDE97A 100%)" }}>
         <div className="max-w-2xl mx-auto px-6 py-6">
           <div className="flex items-center gap-4">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl font-bold"
-              style={{ background: "#1E243A", color: "#FCDB32" }}
-            >
-              {(propertyName[0] || "H").toUpperCase()}
-            </div>
             <div>
               {starRating > 0 && (
                 <div className="mb-0.5">

@@ -5,6 +5,7 @@ import { checkAnswerQuality } from "@/lib/quality";
 import { reviewStore, LiveReview, LiveAnswer, LivePhoto } from "@/lib/store";
 import { generateHotelDisplayName } from "@/lib/utils";
 import { invalidateInsightsCache } from "@/lib/insights-cache";
+import { invalidateMLCache } from "@/lib/ml/analyze-ml";
 import { randomUUID } from "crypto";
 
 interface AnswerPayload {
@@ -76,6 +77,7 @@ export async function POST(request: Request) {
     // ── Invalidate caches so next request picks up the new review ────────────
     invalidateAnalysisCache(propertyId);
     invalidateInsightsCache(propertyId);
+    invalidateMLCache(propertyId);
 
     // ── Compute new score (now includes the live review) ─────────────────────
     const reviewsAfter = getReviewsForProperty(propertyId);

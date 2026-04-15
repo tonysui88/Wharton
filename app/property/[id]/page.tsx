@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import ManagerNotifications from "@/components/ManagerNotifications";
 import PropertyInsights from "@/components/PropertyInsights";
+import MLAnalysis from "@/components/MLAnalysis";
 
 export const dynamic = "force-dynamic";
 
@@ -408,6 +409,17 @@ export default async function PropertyDetailPage({ params }: Props) {
                   </p>
                 </div>
               </div>
+            </div>
+
+            {/* ML Analysis — full width below the 3-col grid */}
+            <div className="mt-6 bg-white rounded-2xl border border-[#e5e0d8] p-6">
+              <div className="mb-5">
+                <h2 className="text-lg font-bold text-[#1a1a2e]">ML Score Analysis</h2>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  Embedding-based topic classification + aspect-based sentiment analysis (ABSA) vs. current keyword system
+                </p>
+              </div>
+              <MLAnalysis propertyId={id} />
             </div>
           </TabsContent>
 

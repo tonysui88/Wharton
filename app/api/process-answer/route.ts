@@ -6,6 +6,7 @@ import { reviewStore, LiveReview, LiveAnswer, LivePhoto } from "@/lib/store";
 import { generateHotelDisplayName } from "@/lib/utils";
 import { invalidateInsightsCache } from "@/lib/insights-cache";
 import { invalidateMLCache } from "@/lib/ml/analyze-ml";
+import { invalidateAbsaCache } from "@/lib/ml/absa-cache";
 import { randomUUID, createHash } from "crypto";
 import { classifyTextML } from "@/lib/ml/topic-classifier";
 import { liveClassificationCache } from "@/lib/live-classification-cache";
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
     // ── Score before adding the new review ───────────────────────────────────
     const reviewsBefore = getReviewsForProperty(propertyId);
     const analysisBefore = analyzeProperty(property, reviewsBefore);
-    const previousScore = analysisBefore.knowledgeHealthScore;
+    const previousScore = analysisBefore.coverageScore;
 
     // ── Persist new review to in-memory store ────────────────────────────────
     const liveAnswers: LiveAnswer[] = answers.map((a) => ({
@@ -92,6 +93,7 @@ export async function POST(request: Request) {
     invalidateAnalysisCache(propertyId);
     invalidateInsightsCache(propertyId);
     invalidateMLCache(propertyId);
+    invalidateAbsaCache(propertyId); // force re-run of ABSA on next ml-analyze call
 
     // ── Compute new score (now includes the live review) ─────────────────────
     const reviewsAfter = getReviewsForProperty(propertyId);
@@ -104,7 +106,7 @@ export async function POST(request: Request) {
     const photoTopicIds = livePhotos.map((p) => p.topicId);
     const improvedTopics = [...new Set([...answerTopicIds, ...reviewTopicIds, ...photoTopicIds])];
 
-    const newScore = analysisAfter.knowledgeHealthScore;
+    const newScore = analysisAfter.coverageScore;
     const improvement = newScore - previousScore;
 
     // ── Push event for SSE (manager notifications) ───────────────────────────

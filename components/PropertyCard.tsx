@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import KnowledgeHealthScore from "./KnowledgeHealthScore";
+import CoverageScore from "./CoverageScore";
 import { MapPin, MessageSquare, TrendingUp } from "lucide-react";
 
 interface TopGap {
@@ -46,7 +46,7 @@ interface PropertyCardProps {
   guestrating_avg_expedia: number;
   popular_amenities_list: string[];
   property_description: string;
-  knowledgeHealthScore: number;
+  coverageScore: number;
   totalReviews: number;
   topGaps: TopGap[];
   topTopics: { topicLabel: string; coverageScore: number; sentiment: string }[];
@@ -85,7 +85,7 @@ export default function PropertyCard({
   guestrating_avg_expedia,
   popular_amenities_list,
   property_description,
-  knowledgeHealthScore,
+  coverageScore,
   totalReviews,
   topGaps,
   topTopics,
@@ -139,7 +139,7 @@ export default function PropertyCard({
             <span className="truncate">{location}</span>
           </div>
         </div>
-        <KnowledgeHealthScore score={knowledgeHealthScore} size="sm" showLabel />
+        <CoverageScore score={coverageScore} size="sm" showLabel />
       </div>
 
       {/* Description preview */}

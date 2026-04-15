@@ -148,11 +148,11 @@ function TopicRow({ topic }: { topic: MLTopicResult }) {
                   <span
                     className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold flex-shrink-0 mt-0.5"
                     style={{
-                      background: e.sentiment === "positive" ? "#f0fdf4" : e.sentiment === "negative" ? "#fef2f2" : "#f3f4f6",
-                      color:      e.sentiment === "positive" ? "#16a34a" : e.sentiment === "negative" ? "#dc2626" : "#6b7280",
+                      background: e.score >= 0.6 ? "#f0fdf4" : e.score <= 0.4 ? "#fef2f2" : "#f3f4f6",
+                      color:      e.score >= 0.6 ? "#16a34a" : e.score <= 0.4 ? "#dc2626" : "#6b7280",
                     }}
                   >
-                    {e.sentiment}
+                    {e.score >= 0.6 ? "positive" : e.score <= 0.4 ? "negative" : "neutral"}
                   </span>
                   <p className="text-xs text-gray-600 italic">&ldquo;{e.text}&rdquo;</p>
                 </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { getKnowledgeHealthColor, getKnowledgeHealthLabel } from "@/lib/health-utils";
+import { getCoverageColor, getCoverageLabel } from "@/lib/health-utils";
 
 interface BeforeAfterScoreProps {
   previousScore: number;
@@ -68,7 +68,7 @@ function AnimatedScore({ target, color }: { target: number; color: string }) {
         style={{ color }}
         translate="no"
       >
-        {getKnowledgeHealthLabel(current)}
+        {getCoverageLabel(current)}
       </span>
     </div>
   );
@@ -87,8 +87,8 @@ export default function BeforeAfterScore({
     return () => clearTimeout(t);
   }, []);
 
-  const prevColor = getKnowledgeHealthColor(previousScore);
-  const newColor = getKnowledgeHealthColor(newScore);
+  const prevColor = getCoverageColor(previousScore);
+  const newColor = getCoverageColor(newScore);
 
   if (!visible) return null;
 
@@ -98,7 +98,7 @@ export default function BeforeAfterScore({
       <div className="flex items-center gap-2">
         <Sparkles className="w-5 h-5 text-[#ff6b35]" />
         <h3 className="text-lg font-bold text-[#1a1a2e]">
-          Knowledge Health Updated!
+          Coverage Score Updated!
         </h3>
         <Sparkles className="w-5 h-5 text-[#ff6b35]" />
       </div>

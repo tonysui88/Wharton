@@ -5,6 +5,7 @@ import { Property, Review, parseReviewDate } from "./data";
 import { TOPICS, Topic, classifyText } from "./topics";
 import type { LearnedWeights } from "./ml/continuous-learning";
 import { liveClassificationCache } from "./live-classification-cache";
+import { getAbsaScore } from "./ml/absa-cache";
 
 // ── AI topic classification cache ─────────────────────────────────────────────
 // Populated by scripts/classify-topics-ai.ts. Falls back to keyword matching
@@ -64,7 +65,8 @@ export interface TopicAnalysis {
   sentimentConfidence: number; // 0-1
   // Hybrid scoring signals
   structuredRatingScore: number | null; // 0-1 from sub-rating fields; null = no data
-  textSentimentScore: number;           // 0-1 from keyword analysis of review text
+  textSentimentScore: number;           // 0-1 from keyword analysis of review text (S2 fallback)
+  mlSentimentScore: number | null;      // 0-1 from ABSA when available; null = not yet run
   hybridSentimentScore: number;         // 0-1 blended (S1×0.55 + S2×0.45, or S2 alone)
   topicScore: number;       // 0-1, weighted composite
   isStale: boolean;
@@ -76,7 +78,7 @@ export interface TopicAnalysis {
 
 export interface PropertyAnalysis {
   propertyId: string;
-  knowledgeHealthScore: number; // 0-100
+  coverageScore: number; // 0-100
   topics: TopicAnalysis[];
   totalReviews: number;
   reviewsWithText: number;
@@ -275,8 +277,14 @@ export function analyzeProperty(
     // Signal 1: structured sub-ratings across all reviews for this property
     const structuredRatingScore = computeStructuredRatingScore(reviews, topic.ratingKeys);
 
-    // Signal 2: keyword sentiment on text reviews mentioning this topic
+    // Signal 2: keyword sentiment on text reviews mentioning this topic (fallback)
     const textSentimentScore = detectTextSentimentScore(mentioningReviews);
+
+    // ML Signal 2 (preferred): ABSA score cached from a previous /api/ml-analyze run.
+    // When present, it replaces keyword counting as the S2 signal — ABSA correctly
+    // handles negation and context that simple word counts miss.
+    const mlSentimentScore = getAbsaScore(property.eg_property_id, topic.id);
+    const effectiveS2 = mlSentimentScore !== null ? mlSentimentScore : textSentimentScore;
 
     // Blend: structured ratings enrich text sentiment, but only when text coverage exists.
     // Use learned sentiment blend weights if available, otherwise fall back to defaults.
@@ -285,9 +293,9 @@ export function analyzeProperty(
     const s2Weight = learnedBlend?.hasStructuredData ? learnedBlend.textWeight : 0.45;
 
     const hybridSentimentScore = reviewCount > 0 && structuredRatingScore !== null
-      ? structuredRatingScore * s1Weight + textSentimentScore * s2Weight
+      ? structuredRatingScore * s1Weight + effectiveS2 * s2Weight
       : reviewCount > 0
-      ? textSentimentScore
+      ? effectiveS2
       : 0.5; // neutral - no text data to draw from
 
     const wCoverage  = learnedWeights?.topicScoreWeights?.coverageWeight  ?? 0.35;
@@ -322,6 +330,7 @@ export function analyzeProperty(
       sentimentConfidence,
       structuredRatingScore,
       textSentimentScore,
+      mlSentimentScore,
       hybridSentimentScore,
       topicScore,
       isStale,
@@ -337,7 +346,7 @@ export function analyzeProperty(
   const relevantTopics = topics.filter((t) => t.isRelevant);
 
   // Use learned importance weights if available, otherwise equal weight (simple mean)
-  let knowledgeHealthScore = 0;
+  let coverageScore = 0;
   if (relevantTopics.length > 0) {
     if (learnedWeights) {
       const totalImportance = relevantTopics.reduce((sum, t) => {
@@ -349,9 +358,9 @@ export function analyzeProperty(
         const w = imp?.weight ?? 1 / TOPICS.length;
         return sum + w * t.topicScore;
       }, 0);
-      knowledgeHealthScore = Math.round((weightedSum / totalImportance) * 100);
+      coverageScore = Math.round((weightedSum / totalImportance) * 100);
     } else {
-      knowledgeHealthScore = Math.round(
+      coverageScore = Math.round(
         (relevantTopics.reduce((sum, t) => sum + t.topicScore, 0) / relevantTopics.length) * 100
       );
     }
@@ -367,7 +376,7 @@ export function analyzeProperty(
 
   const result: PropertyAnalysis = {
     propertyId: property.eg_property_id,
-    knowledgeHealthScore,
+    coverageScore,
     topics,
     totalReviews: reviews.length,
     reviewsWithText: reviewsWithText.length,
@@ -378,13 +387,13 @@ export function analyzeProperty(
   return result;
 }
 
-export function getKnowledgeHealthColor(score: number): string {
+export function getCoverageColor(score: number): string {
   if (score >= 75) return "#22c55e"; // green
   if (score >= 50) return "#f59e0b"; // amber
   return "#ef4444"; // red
 }
 
-export function getKnowledgeHealthLabel(score: number): string {
+export function getCoverageLabel(score: number): string {
   if (score >= 75) return "Excellent";
   if (score >= 60) return "Good";
   if (score >= 40) return "Fair";

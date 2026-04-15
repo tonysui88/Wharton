@@ -38,7 +38,7 @@ export default async function ReviewPage({ params }: Props) {
       country={property.country}
       starRating={property.star_rating}
       location={location}
-      currentHealthScore={analysis.knowledgeHealthScore}
+      currentHealthScore={analysis.coverageScore}
     />
   );
 }

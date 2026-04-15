@@ -1,0 +1,988 @@
+{
+  "9a0043fd4258a1286db1e253ca591662b3aac849da12d0d4f67e08b8f59be65f": {
+    "cleanliness": {
+      "score": 0.75,
+      "reviewCount": 32,
+      "computedAt": "2026-04-15T19:58:49.922Z"
+    },
+    "location": {
+      "score": 0.8846153846153846,
+      "reviewCount": 14,
+      "computedAt": "2026-04-15T19:59:04.494Z"
+    },
+    "food_breakfast": {
+      "score": 0.9245283018867925,
+      "reviewCount": 33,
+      "computedAt": "2026-04-15T19:59:31.565Z"
+    },
+    "wifi_internet": {
+      "score": 0.07142857142857142,
+      "reviewCount": 4,
+      "computedAt": "2026-04-15T19:59:34.754Z"
+    },
+    "parking": {
+      "score": 1,
+      "reviewCount": 5,
+      "computedAt": "2026-04-15T19:59:37.915Z"
+    },
+    "pool_fitness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T19:59:38.117Z"
+    },
+    "checkin_checkout": {
+      "score": 0.3333333333333333,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T19:59:41.039Z"
+    },
+    "noise": {
+      "score": 0.40909090909090906,
+      "reviewCount": 5,
+      "computedAt": "2026-04-15T19:59:44.714Z"
+    },
+    "room_comfort": {
+      "score": 0.6666666666666667,
+      "reviewCount": 20,
+      "computedAt": "2026-04-15T19:59:57.488Z"
+    },
+    "bathroom": {
+      "score": 0,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:00:00.107Z"
+    },
+    "staff_service": {
+      "score": 0.9949494949494949,
+      "reviewCount": 50,
+      "computedAt": "2026-04-15T20:00:42.710Z"
+    },
+    "value": {
+      "score": 1,
+      "reviewCount": 6,
+      "computedAt": "2026-04-15T20:00:47.849Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:00:48.051Z"
+    },
+    "accessibility": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:00:48.052Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:00:48.053Z"
+    }
+  },
+  "db38b19b897dbece3e34919c662b3fd66d23b615395d11fb69264dd3a9b17723": {
+    "cleanliness": {
+      "score": 0.7862068965517242,
+      "reviewCount": 45,
+      "computedAt": "2026-04-15T20:01:31.920Z"
+    },
+    "location": {
+      "score": 0.9241560277039607,
+      "reviewCount": 47,
+      "computedAt": "2026-04-15T20:07:19.686Z"
+    },
+    "food_breakfast": {
+      "score": 0.8484924488976646,
+      "reviewCount": 49,
+      "computedAt": "2026-04-15T20:07:20.718Z"
+    },
+    "wifi_internet": {
+      "score": 0.1593005703709137,
+      "reviewCount": 9,
+      "computedAt": "2026-04-15T20:07:20.859Z"
+    },
+    "parking": {
+      "score": 0.656969696289451,
+      "reviewCount": 13,
+      "computedAt": "2026-04-15T20:07:21.073Z"
+    },
+    "pool_fitness": {
+      "score": 0.850886522936208,
+      "reviewCount": 48,
+      "computedAt": "2026-04-15T20:07:21.826Z"
+    },
+    "checkin_checkout": {
+      "score": 0.5923294125598447,
+      "reviewCount": 25,
+      "computedAt": "2026-04-15T20:07:22.303Z"
+    },
+    "noise": {
+      "score": 0.2777467227695224,
+      "reviewCount": 27,
+      "computedAt": "2026-04-15T20:07:22.829Z"
+    },
+    "room_comfort": {
+      "score": 0.7731765451070466,
+      "reviewCount": 47,
+      "computedAt": "2026-04-15T20:07:23.624Z"
+    },
+    "bathroom": {
+      "score": 0.21925217704038005,
+      "reviewCount": 19,
+      "computedAt": "2026-04-15T20:07:24.122Z"
+    },
+    "staff_service": {
+      "score": 0.8394003864314821,
+      "reviewCount": 45,
+      "computedAt": "2026-04-15T20:07:24.820Z"
+    },
+    "value": {
+      "score": 0.5106713161393255,
+      "reviewCount": 20,
+      "computedAt": "2026-04-15T20:07:25.288Z"
+    },
+    "spa_wellness": {
+      "score": 0.7916483840158126,
+      "reviewCount": 23,
+      "computedAt": "2026-04-15T20:07:25.674Z"
+    },
+    "accessibility": {
+      "score": 0.0050188127796732575,
+      "reviewCount": 4,
+      "computedAt": "2026-04-15T20:07:25.782Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:25.783Z"
+    }
+  },
+  "ff26cdda236b233f7c481f0e896814075ac6bed335e162e0ff01d5491343f838": {
+    "cleanliness": {
+      "score": 0.8458458736121277,
+      "reviewCount": 45,
+      "computedAt": "2026-04-15T20:07:26.382Z"
+    },
+    "location": {
+      "score": 0.9396577102055816,
+      "reviewCount": 42,
+      "computedAt": "2026-04-15T20:07:26.943Z"
+    },
+    "food_breakfast": {
+      "score": 0.7672202302438903,
+      "reviewCount": 48,
+      "computedAt": "2026-04-15T20:07:27.775Z"
+    },
+    "wifi_internet": {
+      "score": 0.05034279823303223,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:07:27.804Z"
+    },
+    "parking": {
+      "score": 0.81370267098346,
+      "reviewCount": 12,
+      "computedAt": "2026-04-15T20:07:27.948Z"
+    },
+    "pool_fitness": {
+      "score": 0.6547971151301573,
+      "reviewCount": 24,
+      "computedAt": "2026-04-15T20:07:28.377Z"
+    },
+    "checkin_checkout": {
+      "score": 0.5470171301733715,
+      "reviewCount": 41,
+      "computedAt": "2026-04-15T20:07:29.150Z"
+    },
+    "noise": {
+      "score": 0.5088416676470332,
+      "reviewCount": 21,
+      "computedAt": "2026-04-15T20:07:29.592Z"
+    },
+    "room_comfort": {
+      "score": 0.8459243195034618,
+      "reviewCount": 46,
+      "computedAt": "2026-04-15T20:07:30.273Z"
+    },
+    "bathroom": {
+      "score": 0.30427580555452405,
+      "reviewCount": 35,
+      "computedAt": "2026-04-15T20:07:30.984Z"
+    },
+    "staff_service": {
+      "score": 0.9206290306731479,
+      "reviewCount": 45,
+      "computedAt": "2026-04-15T20:07:31.522Z"
+    },
+    "value": {
+      "score": 0.9151095134606382,
+      "reviewCount": 23,
+      "computedAt": "2026-04-15T20:07:31.861Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:31.862Z"
+    },
+    "accessibility": {
+      "score": 0.9998175948858261,
+      "reviewCount": 4,
+      "computedAt": "2026-04-15T20:07:31.913Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:31.914Z"
+    }
+  },
+  "3216b1b7885bffdb336265a8de7322ba0cd477cfb3d4f99d19acf488f76a1941": {
+    "cleanliness": {
+      "score": 0.7384435463313042,
+      "reviewCount": 36,
+      "computedAt": "2026-04-15T20:07:32.422Z"
+    },
+    "location": {
+      "score": 0.7647499103433562,
+      "reviewCount": 37,
+      "computedAt": "2026-04-15T20:07:32.957Z"
+    },
+    "food_breakfast": {
+      "score": 0.5828569446737244,
+      "reviewCount": 32,
+      "computedAt": "2026-04-15T20:07:33.693Z"
+    },
+    "wifi_internet": {
+      "score": 0.3271781822578363,
+      "reviewCount": 11,
+      "computedAt": "2026-04-15T20:07:33.911Z"
+    },
+    "parking": {
+      "score": 0.7540455134584573,
+      "reviewCount": 45,
+      "computedAt": "2026-04-15T20:07:34.553Z"
+    },
+    "pool_fitness": {
+      "score": 0.9997639954090118,
+      "reviewCount": 2,
+      "computedAt": "2026-04-15T20:07:34.582Z"
+    },
+    "checkin_checkout": {
+      "score": 0.755199704800109,
+      "reviewCount": 46,
+      "computedAt": "2026-04-15T20:07:35.346Z"
+    },
+    "noise": {
+      "score": 0.31192861204846795,
+      "reviewCount": 42,
+      "computedAt": "2026-04-15T20:07:36.110Z"
+    },
+    "room_comfort": {
+      "score": 0.6734958679246159,
+      "reviewCount": 39,
+      "computedAt": "2026-04-15T20:07:36.710Z"
+    },
+    "bathroom": {
+      "score": 0.45621493574511324,
+      "reviewCount": 40,
+      "computedAt": "2026-04-15T20:07:37.438Z"
+    },
+    "staff_service": {
+      "score": 0.9214756720227542,
+      "reviewCount": 42,
+      "computedAt": "2026-04-15T20:07:37.843Z"
+    },
+    "value": {
+      "score": 0.8936338846070382,
+      "reviewCount": 30,
+      "computedAt": "2026-04-15T20:07:38.260Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:38.262Z"
+    },
+    "accessibility": {
+      "score": 0.22043274408289687,
+      "reviewCount": 4,
+      "computedAt": "2026-04-15T20:07:38.318Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:38.319Z"
+    }
+  },
+  "823fb2499b4e37d99acb65e7198e75965d6496fd1c579f976205c0e6179206df": {
+    "cleanliness": {
+      "score": 0.8677575159958882,
+      "reviewCount": 40,
+      "computedAt": "2026-04-15T20:07:39.002Z"
+    },
+    "location": {
+      "score": 0.8600122519711345,
+      "reviewCount": 38,
+      "computedAt": "2026-04-15T20:07:39.658Z"
+    },
+    "food_breakfast": {
+      "score": 0.8676572810756551,
+      "reviewCount": 44,
+      "computedAt": "2026-04-15T20:07:40.609Z"
+    },
+    "wifi_internet": {
+      "score": 0.5137649655342102,
+      "reviewCount": 5,
+      "computedAt": "2026-04-15T20:07:40.757Z"
+    },
+    "parking": {
+      "score": 0.34066638008220723,
+      "reviewCount": 2,
+      "computedAt": "2026-04-15T20:07:40.812Z"
+    },
+    "pool_fitness": {
+      "score": 0.6858052454502344,
+      "reviewCount": 2,
+      "computedAt": "2026-04-15T20:07:40.865Z"
+    },
+    "checkin_checkout": {
+      "score": 0.8028997513122603,
+      "reviewCount": 14,
+      "computedAt": "2026-04-15T20:07:41.297Z"
+    },
+    "noise": {
+      "score": 0.4952287521639385,
+      "reviewCount": 18,
+      "computedAt": "2026-04-15T20:07:41.821Z"
+    },
+    "room_comfort": {
+      "score": 0.8378432034745977,
+      "reviewCount": 44,
+      "computedAt": "2026-04-15T20:07:42.512Z"
+    },
+    "bathroom": {
+      "score": 0.5281116987488343,
+      "reviewCount": 36,
+      "computedAt": "2026-04-15T20:07:43.527Z"
+    },
+    "staff_service": {
+      "score": 0.9575845740731485,
+      "reviewCount": 42,
+      "computedAt": "2026-04-15T20:07:44.095Z"
+    },
+    "value": {
+      "score": 0.7486882082487161,
+      "reviewCount": 15,
+      "computedAt": "2026-04-15T20:07:44.491Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:44.492Z"
+    },
+    "accessibility": {
+      "score": 0.5008978088379719,
+      "reviewCount": 4,
+      "computedAt": "2026-04-15T20:07:44.577Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:44.578Z"
+    }
+  },
+  "fa014137b3ea9af6a90c0a86a1d099e46f7e56d6eb33db1ad1ec4bdac68c3caa": {
+    "cleanliness": {
+      "score": 0.8248956111069384,
+      "reviewCount": 48,
+      "computedAt": "2026-04-15T20:07:45.471Z"
+    },
+    "location": {
+      "score": 0.9127497401693705,
+      "reviewCount": 41,
+      "computedAt": "2026-04-15T20:07:46.110Z"
+    },
+    "food_breakfast": {
+      "score": 0.8607728510278604,
+      "reviewCount": 50,
+      "computedAt": "2026-04-15T20:07:47.130Z"
+    },
+    "wifi_internet": {
+      "score": 0.33537518978118896,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:07:47.181Z"
+    },
+    "parking": {
+      "score": 0.7895004938044499,
+      "reviewCount": 49,
+      "computedAt": "2026-04-15T20:07:47.959Z"
+    },
+    "pool_fitness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:47.960Z"
+    },
+    "checkin_checkout": {
+      "score": 0.6943976010669268,
+      "reviewCount": 26,
+      "computedAt": "2026-04-15T20:07:48.474Z"
+    },
+    "noise": {
+      "score": 0.2502995317333531,
+      "reviewCount": 44,
+      "computedAt": "2026-04-15T20:07:49.369Z"
+    },
+    "room_comfort": {
+      "score": 0.836691589869332,
+      "reviewCount": 47,
+      "computedAt": "2026-04-15T20:07:50.275Z"
+    },
+    "bathroom": {
+      "score": 0.36969464250623607,
+      "reviewCount": 10,
+      "computedAt": "2026-04-15T20:07:50.518Z"
+    },
+    "staff_service": {
+      "score": 0.8743141222166935,
+      "reviewCount": 47,
+      "computedAt": "2026-04-15T20:07:51.195Z"
+    },
+    "value": {
+      "score": 0.8634165923335807,
+      "reviewCount": 18,
+      "computedAt": "2026-04-15T20:07:51.475Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:51.476Z"
+    },
+    "accessibility": {
+      "score": 0.2479220581010856,
+      "reviewCount": 22,
+      "computedAt": "2026-04-15T20:07:51.926Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:07:51.927Z"
+    }
+  },
+  "7d027ef72c02eaa17af3c993fd5dba50d17b41a6280389a46c13c7e2c32a5b06": {
+    "cleanliness": {
+      "score": 0.4795891142044452,
+      "reviewCount": 45,
+      "computedAt": "2026-04-15T20:07:52.645Z"
+    },
+    "location": {
+      "score": 0.7143965935271088,
+      "reviewCount": 43,
+      "computedAt": "2026-04-15T20:07:53.252Z"
+    },
+    "food_breakfast": {
+      "score": 0.7579827191924204,
+      "reviewCount": 48,
+      "computedAt": "2026-04-15T20:07:53.948Z"
+    },
+    "wifi_internet": {
+      "score": 0.1649452478150105,
+      "reviewCount": 20,
+      "computedAt": "2026-04-15T20:07:54.327Z"
+    },
+    "parking": {
+      "score": 0.1603259911220045,
+      "reviewCount": 36,
+      "computedAt": "2026-04-15T20:07:54.870Z"
+    },
+    "pool_fitness": {
+      "score": 0.6707128307907857,
+      "reviewCount": 35,
+      "computedAt": "2026-04-15T20:07:55.488Z"
+    },
+    "checkin_checkout": {
+      "score": 0.2628187379874882,
+      "reviewCount": 43,
+      "computedAt": "2026-04-15T20:07:56.459Z"
+    },
+    "noise": {
+      "score": 0.24637796528058015,
+      "reviewCount": 47,
+      "computedAt": "2026-04-15T20:07:57.469Z"
+    },
+    "room_comfort": {
+      "score": 0.5071091707557325,
+      "reviewCount": 45,
+      "computedAt": "2026-04-15T20:07:58.329Z"
+    },
+    "bathroom": {
+      "score": 0.1808708738907367,
+      "reviewCount": 49,
+      "computedAt": "2026-04-15T20:07:59.251Z"
+    },
+    "staff_service": {
+      "score": 0.6914960116662441,
+      "reviewCount": 42,
+      "computedAt": "2026-04-15T20:07:59.846Z"
+    },
+    "value": {
+      "score": 0.8203515374018137,
+      "reviewCount": 16,
+      "computedAt": "2026-04-15T20:08:00.120Z"
+    },
+    "spa_wellness": {
+      "score": 0.12553316354751587,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:00.128Z"
+    },
+    "accessibility": {
+      "score": 0.48418492198079793,
+      "reviewCount": 9,
+      "computedAt": "2026-04-15T20:08:00.272Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:00.276Z"
+    }
+  },
+  "3b984f3ba8df55b2609a1e33fd694cf8407842e1d833c9b4d993b07fc83a2820": {
+    "cleanliness": {
+      "score": 0.9274582070752381,
+      "reviewCount": 4,
+      "computedAt": "2026-04-15T20:08:00.349Z"
+    },
+    "location": {
+      "score": 0.6164082022039118,
+      "reviewCount": 10,
+      "computedAt": "2026-04-15T20:08:00.537Z"
+    },
+    "food_breakfast": {
+      "score": 0.6744107020026753,
+      "reviewCount": 8,
+      "computedAt": "2026-04-15T20:08:00.718Z"
+    },
+    "wifi_internet": {
+      "score": 0.0202942689259847,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:08:00.755Z"
+    },
+    "parking": {
+      "score": 0.3503522979019196,
+      "reviewCount": 7,
+      "computedAt": "2026-04-15T20:08:00.856Z"
+    },
+    "pool_fitness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:00.857Z"
+    },
+    "checkin_checkout": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:00.857Z"
+    },
+    "noise": {
+      "score": 0.4923385679721832,
+      "reviewCount": 2,
+      "computedAt": "2026-04-15T20:08:00.904Z"
+    },
+    "room_comfort": {
+      "score": 0.5925392871569292,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:08:00.988Z"
+    },
+    "bathroom": {
+      "score": 0.6015513055712723,
+      "reviewCount": 4,
+      "computedAt": "2026-04-15T20:08:01.094Z"
+    },
+    "staff_service": {
+      "score": 0.6620427742801872,
+      "reviewCount": 17,
+      "computedAt": "2026-04-15T20:08:01.368Z"
+    },
+    "value": {
+      "score": 0.9267482757568358,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:01.377Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:01.377Z"
+    },
+    "accessibility": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:01.377Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:01.378Z"
+    }
+  },
+  "f2d8d9557208d58577e9df7ff34e42bf86fb5b10fdfae0c3040d14c374a2a2b9": {
+    "cleanliness": {
+      "score": 0.5281117755412185,
+      "reviewCount": 50,
+      "computedAt": "2026-04-15T20:08:02.470Z"
+    },
+    "location": {
+      "score": 0.8684571653534744,
+      "reviewCount": 42,
+      "computedAt": "2026-04-15T20:08:03.188Z"
+    },
+    "food_breakfast": {
+      "score": 0.9971353631802754,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:03.222Z"
+    },
+    "wifi_internet": {
+      "score": 0.9837990403175354,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:03.229Z"
+    },
+    "parking": {
+      "score": 0.3892699889250677,
+      "reviewCount": 9,
+      "computedAt": "2026-04-15T20:08:03.425Z"
+    },
+    "pool_fitness": {
+      "score": 0.8369693661940066,
+      "reviewCount": 18,
+      "computedAt": "2026-04-15T20:08:03.842Z"
+    },
+    "checkin_checkout": {
+      "score": 0.2532662676053428,
+      "reviewCount": 6,
+      "computedAt": "2026-04-15T20:08:04.020Z"
+    },
+    "noise": {
+      "score": 0.004331557946353946,
+      "reviewCount": 4,
+      "computedAt": "2026-04-15T20:08:04.116Z"
+    },
+    "room_comfort": {
+      "score": 0.4463516729732603,
+      "reviewCount": 40,
+      "computedAt": "2026-04-15T20:08:04.947Z"
+    },
+    "bathroom": {
+      "score": 0.13803803467369952,
+      "reviewCount": 9,
+      "computedAt": "2026-04-15T20:08:05.169Z"
+    },
+    "staff_service": {
+      "score": 0.839690867059088,
+      "reviewCount": 34,
+      "computedAt": "2026-04-15T20:08:05.699Z"
+    },
+    "value": {
+      "score": 0.8077644172001167,
+      "reviewCount": 16,
+      "computedAt": "2026-04-15T20:08:06.052Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:06.055Z"
+    },
+    "accessibility": {
+      "score": 0.15809674599064805,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:08:06.126Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:06.142Z"
+    }
+  },
+  "110f01b8ae518a0ee41047bce5c22572988a435e10ead72dc1af793bba8ce0b0": {
+    "cleanliness": {
+      "score": 0.7060375032284143,
+      "reviewCount": 33,
+      "computedAt": "2026-04-15T20:08:07.119Z"
+    },
+    "location": {
+      "score": 0.8002386889940845,
+      "reviewCount": 35,
+      "computedAt": "2026-04-15T20:08:07.874Z"
+    },
+    "food_breakfast": {
+      "score": 0.5916743248132229,
+      "reviewCount": 33,
+      "computedAt": "2026-04-15T20:08:08.807Z"
+    },
+    "wifi_internet": {
+      "score": 0.19997842465880164,
+      "reviewCount": 5,
+      "computedAt": "2026-04-15T20:08:08.889Z"
+    },
+    "parking": {
+      "score": 0.5503823809421854,
+      "reviewCount": 5,
+      "computedAt": "2026-04-15T20:08:09.057Z"
+    },
+    "pool_fitness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:09.060Z"
+    },
+    "checkin_checkout": {
+      "score": 0.6294221261675832,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:08:09.167Z"
+    },
+    "noise": {
+      "score": 0.379729129209671,
+      "reviewCount": 7,
+      "computedAt": "2026-04-15T20:08:09.356Z"
+    },
+    "room_comfort": {
+      "score": 0.7544105098920796,
+      "reviewCount": 13,
+      "computedAt": "2026-04-15T20:08:09.692Z"
+    },
+    "bathroom": {
+      "score": 0.4011340000814438,
+      "reviewCount": 5,
+      "computedAt": "2026-04-15T20:08:09.839Z"
+    },
+    "staff_service": {
+      "score": 0.8721289329234523,
+      "reviewCount": 40,
+      "computedAt": "2026-04-15T20:08:10.593Z"
+    },
+    "value": {
+      "score": 0.9731907408391569,
+      "reviewCount": 6,
+      "computedAt": "2026-04-15T20:08:10.789Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:10.789Z"
+    },
+    "accessibility": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:10.789Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:10.790Z"
+    }
+  },
+  "e52d67a758ce4ad0229aacc97e5dfe89984c384c51a70208f9e0cc65c9cd4676": {
+    "cleanliness": {
+      "score": 0.7799187219166307,
+      "reviewCount": 15,
+      "computedAt": "2026-04-15T20:08:11.085Z"
+    },
+    "location": {
+      "score": 0.6582719464115362,
+      "reviewCount": 16,
+      "computedAt": "2026-04-15T20:08:11.544Z"
+    },
+    "food_breakfast": {
+      "score": 0.6646702471972005,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:08:11.668Z"
+    },
+    "wifi_internet": {
+      "score": 0.9992960691452026,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:11.716Z"
+    },
+    "parking": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:11.716Z"
+    },
+    "pool_fitness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:11.717Z"
+    },
+    "checkin_checkout": {
+      "score": 0.7280814798170065,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:11.826Z"
+    },
+    "noise": {
+      "score": 0.999501645565033,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:11.846Z"
+    },
+    "room_comfort": {
+      "score": 0.9287360986521287,
+      "reviewCount": 8,
+      "computedAt": "2026-04-15T20:08:12.103Z"
+    },
+    "bathroom": {
+      "score": 0.0007628202438354492,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:12.133Z"
+    },
+    "staff_service": {
+      "score": 0.9736624725898299,
+      "reviewCount": 11,
+      "computedAt": "2026-04-15T20:08:12.496Z"
+    },
+    "value": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.518Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.518Z"
+    },
+    "accessibility": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.565Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.565Z"
+    }
+  },
+  "5f5a0cd8662f0ddf297f2d27358f680daab5d3ac22fd45a4e1c3c3ec2c101a12": {
+    "cleanliness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.574Z"
+    },
+    "location": {
+      "score": 0.7177958108409009,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:12.622Z"
+    },
+    "food_breakfast": {
+      "score": 0.7203242619727974,
+      "reviewCount": 2,
+      "computedAt": "2026-04-15T20:08:12.682Z"
+    },
+    "wifi_internet": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.685Z"
+    },
+    "parking": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.685Z"
+    },
+    "pool_fitness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.685Z"
+    },
+    "checkin_checkout": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.685Z"
+    },
+    "noise": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.685Z"
+    },
+    "room_comfort": {
+      "score": 0.440764844417572,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:12.717Z"
+    },
+    "bathroom": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.717Z"
+    },
+    "staff_service": {
+      "score": 0.5491221722626454,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:08:12.809Z"
+    },
+    "value": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.827Z"
+    },
+    "spa_wellness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.828Z"
+    },
+    "accessibility": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.828Z"
+    },
+    "eco_sustainability": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.828Z"
+    }
+  },
+  "a036cbe1d9fbf9cba088075d1b4d966ee871df55aa4a58ba0da23c116c499052": {
+    "cleanliness": {
+      "score": 0.5015936158068023,
+      "reviewCount": 2,
+      "computedAt": "2026-04-15T20:08:12.850Z"
+    },
+    "location": {
+      "score": 0.6675122388841389,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:08:12.876Z"
+    },
+    "food_breakfast": {
+      "score": 0.8101982321164382,
+      "reviewCount": 3,
+      "computedAt": "2026-04-15T20:08:12.908Z"
+    },
+    "wifi_internet": {
+      "score": 0.0008466243743896484,
+      "reviewCount": 1,
+      "computedAt": "2026-04-15T20:08:12.929Z"
+    },
+    "parking": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.929Z"
+    },
+    "pool_fitness": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.929Z"
+    },
+    "checkin_checkout": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.929Z"
+    },
+    "noise": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.929Z"
+    },
+    "room_comfort": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.929Z"
+    },
+    "bathroom": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.929Z"
+    },
+    "staff_service": {
+      "score": 0.5083898901939392,
+      "reviewCount": 2,
+      "computedAt": "2026-04-15T20:08:12.956Z"
+    },
+    "value": {
+      "score": 0.5,
+      "reviewCount": 0,
+      "computedAt": "2026-04-15T20:08:12.959Z"
+    }
+  }
+}

@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     const mlAnalysis = await analyzePropertyML(
       property,
       reviews,
-      currentAnalysis.knowledgeHealthScore
+      currentAnalysis.coverageScore
     );
 
     return NextResponse.json(mlAnalysis);

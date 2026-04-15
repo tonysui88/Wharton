@@ -18,11 +18,18 @@ const NEG_WORDS = ["bad", "poor", "terrible", "awful", "horrible", "worst", "dir
 type ReviewSentiment = "positive" | "neutral" | "negative";
 
 function getReviewSentiment(review: Review): ReviewSentiment {
+  const overall = review.rating?.overall ?? 0;
+
+  // Use the structured overall rating as the primary signal — it's more reliable
+  // than keyword matching and covers phrasing like "very pleasant" that keywords miss.
+  if (overall >= 4) return "positive";
+  if (overall <= 2 && overall > 0) return "negative";
+
+  // For 3/5 ratings (or missing ratings), fall back to keyword tiebreaker
   const text = (review.review_text || "").toLowerCase();
   let pos = 0, neg = 0;
   for (const w of POS_WORDS) if (text.includes(w)) pos++;
   for (const w of NEG_WORDS) if (text.includes(w)) neg++;
-  if (pos === 0 && neg === 0) return "neutral";
   if (pos > neg * 1.5) return "positive";
   if (neg > pos * 1.5) return "negative";
   return "neutral";

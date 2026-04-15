@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Award, Gift } from "lucide-react";
 import {
   calculatePointsEarned, getLevel, getNextLevel, progressToNextLevel,
   addPoints, getStoredPoints, EXCLUSIVE_DEALS, type Level,
@@ -60,7 +61,7 @@ export default function ReviewerImpact({
           className="rounded-2xl p-4 text-center animate-fade-in"
           style={{ background: `linear-gradient(135deg, ${currentLevel.color}20, ${currentLevel.color}10)`, border: `1.5px solid ${currentLevel.color}40` }}
         >
-          <p className="text-2xl mb-1">{currentLevel.badge ?? "🎉"}</p>
+          <Award className="w-8 h-8 mx-auto mb-1" style={{ color: currentLevel.color }} />
           <p className="text-base font-extrabold" style={{ color: currentLevel.color }}>
             Level Up! You reached {currentLevel.name}
           </p>
@@ -93,7 +94,7 @@ export default function ReviewerImpact({
       <div className="bg-white border border-[#e5e0d8] rounded-2xl p-4">
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-2">
-            {currentLevel.badge && <span className="text-lg">{currentLevel.badge}</span>}
+            <Award className="w-5 h-5 flex-shrink-0" style={{ color: currentLevel.color }} />
             <div>
               <p className="text-sm font-bold text-[#1a1a2e]">Level {currentLevel.level}: {currentLevel.name}</p>
               <p className="text-xs text-gray-400">{newPoints.toLocaleString()} total points</p>
@@ -142,7 +143,7 @@ export default function ReviewerImpact({
           <div className="space-y-2">
             {currentLevel.perks.map((perk) => (
               <div key={perk.title} className="flex items-start gap-3 bg-white border border-[#e5e0d8] rounded-xl px-3 py-2.5">
-                <span className="text-base flex-shrink-0">{perk.icon}</span>
+                <Gift className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: currentLevel.color }} />
                 <div>
                   <p className="text-xs font-semibold text-[#1a1a2e]">{perk.title}</p>
                   <p className="text-xs text-gray-500">{perk.description}</p>

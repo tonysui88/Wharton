@@ -3,6 +3,7 @@ import { loadProperties, getReviewsForProperty } from "@/lib/data";
 import { analyzeProperty } from "@/lib/analysis";
 import { generateFollowUpQuestions } from "@/lib/openai";
 import { checkTextQuality } from "@/lib/quality";
+import { getActivePromptsForProperty } from "@/lib/manager-prompts";
 
 export async function POST(request: Request) {
   try {
@@ -44,16 +45,22 @@ export async function POST(request: Request) {
       .sort((a, b) => {
         const order = { high: 0, medium: 1, low: 2, none: 3 };
         const diff = order[a.gap] - order[b.gap];
-        // Within the same severity tier, shuffle randomly so the same 2 topics
-        // don't win every time across all hotels
         return diff !== 0 ? diff : Math.random() - 0.5;
       });
+
+    // ── Manager-prompted topics ───────────────────────────────────────────────
+    // Active prompts that the guest hasn't already covered in their review text
+    const activePrompts = getActivePromptsForProperty(propertyId).filter(
+      (p) => !p.topicId || !coveredTopics.includes(p.topicId)
+    );
+    // ─────────────────────────────────────────────────────────────────────────
 
     const questions = await generateFollowUpQuestions(
       property,
       gaps,
       coveredTopics,
-      reviewText
+      reviewText,
+      activePrompts,
     );
 
     return NextResponse.json({

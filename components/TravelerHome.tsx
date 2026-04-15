@@ -35,10 +35,7 @@ function TierBadge({ tier }: { tier: DemoAccount["tier"] }) {
 }
 
 function TripTypeBadge({ type }: { type: DemoAccount["tripType"] }) {
-  const icons: Record<DemoAccount["tripType"], string> = {
-    Business: "💼", Family: "👨‍👩‍👧", Couple: "💑", Solo: "🎒",
-  };
-  return <span className="text-xs text-gray-400">{icons[type]} {type}</span>;
+  return <span className="text-xs text-gray-400">{type}</span>;
 }
 
 // ── Logged-in view ────────────────────────────────────────────────────────────

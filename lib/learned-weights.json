@@ -1488,5 +1488,305 @@
     "reviewsUsed": 547,
     "trainedAt": "2026-04-15T07:26:26.423Z",
     "previousTrainedAt": null
+  },
+  "db38b19b897dbece3e34919c662b3fd66d23b615395d11fb69264dd3a9b17723": {
+    "propertyId": "db38b19b897dbece3e34919c662b3fd66d23b615395d11fb69264dd3a9b17723",
+    "topicImportance": [
+      {
+        "topicId": "cleanliness",
+        "topicLabel": "Cleanliness",
+        "weight": 0.0816,
+        "defaultWeight": 0.0667,
+        "delta": 0.0149,
+        "reviewCount": 153,
+        "correlation": 0.64
+      },
+      {
+        "topicId": "location",
+        "topicLabel": "Location & Neighborhood",
+        "weight": 0.0452,
+        "defaultWeight": 0.0667,
+        "delta": -0.0215,
+        "reviewCount": 117,
+        "correlation": 0.32
+      },
+      {
+        "topicId": "food_breakfast",
+        "topicLabel": "Food & Breakfast",
+        "weight": 0.0598,
+        "defaultWeight": 0.0667,
+        "delta": -0.0068,
+        "reviewCount": 109,
+        "correlation": 0.45
+      },
+      {
+        "topicId": "wifi_internet",
+        "topicLabel": "WiFi & Internet",
+        "weight": 0.075,
+        "defaultWeight": 0.0667,
+        "delta": 0.0084,
+        "reviewCount": 10,
+        "correlation": 0.7
+      },
+      {
+        "topicId": "parking",
+        "topicLabel": "Parking",
+        "weight": 0.0404,
+        "defaultWeight": 0.0667,
+        "delta": -0.0263,
+        "reviewCount": 13,
+        "correlation": -0.19
+      },
+      {
+        "topicId": "pool_fitness",
+        "topicLabel": "Pool & Fitness",
+        "weight": 0.0573,
+        "defaultWeight": 0.0667,
+        "delta": -0.0094,
+        "reviewCount": 148,
+        "correlation": 0.43
+      },
+      {
+        "topicId": "checkin_checkout",
+        "topicLabel": "Check-in & Check-out",
+        "weight": 0.089,
+        "defaultWeight": 0.0667,
+        "delta": 0.0223,
+        "reviewCount": 27,
+        "correlation": 0.81
+      },
+      {
+        "topicId": "noise",
+        "topicLabel": "Noise & Quiet",
+        "weight": 0.0641,
+        "defaultWeight": 0.0667,
+        "delta": -0.0026,
+        "reviewCount": 29,
+        "correlation": 0.48
+      },
+      {
+        "topicId": "room_comfort",
+        "topicLabel": "Room Size & Comfort",
+        "weight": 0.0849,
+        "defaultWeight": 0.0667,
+        "delta": 0.0183,
+        "reviewCount": 80,
+        "correlation": 0.69
+      },
+      {
+        "topicId": "bathroom",
+        "topicLabel": "Bathroom",
+        "weight": 0.0734,
+        "defaultWeight": 0.0667,
+        "delta": 0.0067,
+        "reviewCount": 19,
+        "correlation": 0.62
+      },
+      {
+        "topicId": "staff_service",
+        "topicLabel": "Staff & Service",
+        "weight": 0.0463,
+        "defaultWeight": 0.0667,
+        "delta": -0.0204,
+        "reviewCount": 314,
+        "correlation": 0.35
+      },
+      {
+        "topicId": "value",
+        "topicLabel": "Value for Money",
+        "weight": 0.0736,
+        "defaultWeight": 0.0667,
+        "delta": 0.0069,
+        "reviewCount": 44,
+        "correlation": 0.59
+      },
+      {
+        "topicId": "spa_wellness",
+        "topicLabel": "Spa & Wellness",
+        "weight": 0.0871,
+        "defaultWeight": 0.0667,
+        "delta": 0.0204,
+        "reviewCount": 23,
+        "correlation": 0.8
+      },
+      {
+        "topicId": "accessibility",
+        "topicLabel": "Accessibility",
+        "weight": 0.0742,
+        "defaultWeight": 0.0667,
+        "delta": 0.0075,
+        "reviewCount": 5,
+        "correlation": 0.8
+      },
+      {
+        "topicId": "eco_sustainability",
+        "topicLabel": "Eco & Sustainability",
+        "weight": 0.0667,
+        "defaultWeight": 0.0667,
+        "delta": 0,
+        "reviewCount": 0,
+        "correlation": 0
+      }
+    ],
+    "sentimentBlend": [
+      {
+        "topicId": "cleanliness",
+        "topicLabel": "Cleanliness",
+        "structuredWeight": 0.83,
+        "textWeight": 0.17,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0.28,
+        "reviewCount": 150,
+        "hasStructuredData": true
+      },
+      {
+        "topicId": "location",
+        "topicLabel": "Location & Neighborhood",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": true
+      },
+      {
+        "topicId": "food_breakfast",
+        "topicLabel": "Food & Breakfast",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": false
+      },
+      {
+        "topicId": "wifi_internet",
+        "topicLabel": "WiFi & Internet",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": false
+      },
+      {
+        "topicId": "parking",
+        "topicLabel": "Parking",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": false
+      },
+      {
+        "topicId": "pool_fitness",
+        "topicLabel": "Pool & Fitness",
+        "structuredWeight": 0.81,
+        "textWeight": 0.19,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0.26,
+        "reviewCount": 102,
+        "hasStructuredData": true
+      },
+      {
+        "topicId": "checkin_checkout",
+        "topicLabel": "Check-in & Check-out",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": true
+      },
+      {
+        "topicId": "noise",
+        "topicLabel": "Noise & Quiet",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": false
+      },
+      {
+        "topicId": "room_comfort",
+        "topicLabel": "Room Size & Comfort",
+        "structuredWeight": 0.66,
+        "textWeight": 0.34,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0.11,
+        "reviewCount": 64,
+        "hasStructuredData": true
+      },
+      {
+        "topicId": "bathroom",
+        "topicLabel": "Bathroom",
+        "structuredWeight": 0.54,
+        "textWeight": 0.46,
+        "defaultStructuredWeight": 0.55,
+        "delta": -0.01,
+        "reviewCount": 19,
+        "hasStructuredData": true
+      },
+      {
+        "topicId": "staff_service",
+        "topicLabel": "Staff & Service",
+        "structuredWeight": 0.72,
+        "textWeight": 0.28,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0.17,
+        "reviewCount": 282,
+        "hasStructuredData": true
+      },
+      {
+        "topicId": "value",
+        "topicLabel": "Value for Money",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": true
+      },
+      {
+        "topicId": "spa_wellness",
+        "topicLabel": "Spa & Wellness",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": false
+      },
+      {
+        "topicId": "accessibility",
+        "topicLabel": "Accessibility",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": false
+      },
+      {
+        "topicId": "eco_sustainability",
+        "topicLabel": "Eco & Sustainability",
+        "structuredWeight": 0.55,
+        "textWeight": 0.45,
+        "defaultStructuredWeight": 0.55,
+        "delta": 0,
+        "reviewCount": 0,
+        "hasStructuredData": true
+      }
+    ],
+    "topicScoreWeights": {
+      "coverageWeight": 0.221,
+      "freshnessWeight": 0.221,
+      "sentimentWeight": 0.559
+    },
+    "reviewsUsed": 671,
+    "trainedAt": "2026-04-15T19:25:39.779Z",
+    "previousTrainedAt": null
   }
 }

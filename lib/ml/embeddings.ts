@@ -28,27 +28,35 @@ const embeddingCache: Map<string, number[]> =
   globalThis._embeddingCache ?? (globalThis._embeddingCache = new Map());
 
 let _pipelinePromise: Promise<unknown> | null = null;
+let _embeddingsUnavailable = false;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function getEmbedder(): Promise<any> {
+  if (_embeddingsUnavailable) return null;
   if (globalThis._localEmbedder) return globalThis._localEmbedder;
 
   if (!_pipelinePromise) {
     _pipelinePromise = (async () => {
-      // Dynamic import so Next.js doesn't try to bundle the ONNX runtime at build time
-      const { pipeline } = await import("@xenova/transformers");
-      const embedder = await pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2", {
-        progress_callback: process.env.NODE_ENV === "development"
-          ? (p: unknown) => {
-              const progress = p as { status?: string; file?: string; progress?: number };
-              if (progress.status === "downloading") {
-                process.stdout.write(`\r[embedder] downloading ${progress.file ?? ""} ${Math.round(progress.progress ?? 0)}%`);
+      try {
+        // Dynamic import — excluded from the Next.js bundle via serverExternalPackages.
+        // Falls back gracefully if the package isn't installed.
+        const { pipeline } = await import("@xenova/transformers");
+        const embedder = await pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2", {
+          progress_callback: process.env.NODE_ENV === "development"
+            ? (p: unknown) => {
+                const progress = p as { status?: string; file?: string; progress?: number };
+                if (progress.status === "downloading") {
+                  process.stdout.write(`\r[embedder] downloading ${progress.file ?? ""} ${Math.round(progress.progress ?? 0)}%`);
+                }
               }
-            }
-          : undefined,
-      });
-      globalThis._localEmbedder = embedder;
-      return embedder;
+            : undefined,
+        });
+        globalThis._localEmbedder = embedder;
+        return embedder;
+      } catch {
+        _embeddingsUnavailable = true;
+        return null;
+      }
     })();
   }
 
@@ -82,6 +90,15 @@ export async function getEmbeddings(texts: string[]): Promise<number[][]> {
 
   if (toEmbed.length > 0) {
     const embedder = await getEmbedder();
+
+    // Package not installed — return zero-length vectors so callers fall back
+    // to keyword classification rather than crashing.
+    if (!embedder) {
+      for (const { index } of toEmbed) {
+        results[index] = [];
+      }
+      return results as number[][];
+    }
 
     for (const { index, text } of toEmbed) {
       // @xenova/transformers returns { data: Float32Array, dims: number[] }

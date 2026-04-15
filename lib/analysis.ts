@@ -112,16 +112,33 @@ const NEG_WORDS = ["bad", "poor", "terrible", "awful", "horrible", "worst", "dir
   "disappointing", "disgusting", "broken", "noisy", "stained", "cold", "slow",
   "unfriendly", "unhelpful", "cramped", "outdated", "overpriced", "smelly", "avoid"];
 
-// Signal 2: continuous 0-1 sentiment score derived from review text keywords
+// Classify a single review as positive / negative / neutral using overall rating
+// as the primary signal, with keyword matching as a tiebreaker for 3-star reviews.
+function classifyReviewSentiment(review: Review): "positive" | "negative" | "neutral" {
+  const overall = review.rating?.overall ?? 0;
+  if (overall >= 4) return "positive";
+  if (overall <= 2 && overall > 0) return "negative";
+
+  // 3-star or no rating: use keywords as tiebreaker
+  const text = (review.review_text || "").toLowerCase();
+  let pos = 0, neg = 0;
+  for (const w of POS_WORDS) if (text.includes(w)) pos++;
+  for (const w of NEG_WORDS) if (text.includes(w)) neg++;
+  if (pos > neg * 1.5) return "positive";
+  if (neg > pos * 1.5) return "negative";
+  return "neutral";
+}
+
+// Signal 2: continuous 0-1 sentiment score derived from per-review ratings + keywords
 function detectTextSentimentScore(mentioningReviews: Review[]): number {
-  if (mentioningReviews.length === 0) return 0.5; // no data - neutral
+  if (mentioningReviews.length === 0) return 0.5;
 
   let posCount = 0;
   let negCount = 0;
   for (const review of mentioningReviews) {
-    const text = (review.review_text || "").toLowerCase();
-    for (const w of POS_WORDS) if (text.includes(w)) posCount++;
-    for (const w of NEG_WORDS) if (text.includes(w)) negCount++;
+    const s = classifyReviewSentiment(review);
+    if (s === "positive") posCount++;
+    else if (s === "negative") negCount++;
   }
 
   const total = posCount + negCount;
@@ -142,9 +159,9 @@ function detectSentiment(mentioningReviews: Review[]): {
   let posCount = 0;
   let negCount = 0;
   for (const review of mentioningReviews) {
-    const text = (review.review_text || "").toLowerCase();
-    for (const w of POS_WORDS) if (text.includes(w)) posCount++;
-    for (const w of NEG_WORDS) if (text.includes(w)) negCount++;
+    const s = classifyReviewSentiment(review);
+    if (s === "positive") posCount++;
+    else if (s === "negative") negCount++;
   }
 
   const total = posCount + negCount;

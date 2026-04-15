@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { Property } from "./data";
 import { TopicAnalysis } from "./analysis";
+import { ManagerPrompt } from "./manager-prompts";
 
 let _client: OpenAI | null = null;
 
@@ -47,7 +48,8 @@ export async function generateFollowUpQuestions(
   property: Property,
   gaps: TopicAnalysis[],
   coveredTopics: string[],
-  reviewText: string
+  reviewText: string,
+  requiredPrompts: ManagerPrompt[] = [],
 ): Promise<FollowUpQuestion[]> {
   const client = getClient();
 
@@ -58,6 +60,19 @@ export async function generateFollowUpQuestions(
         `- ${g.topicLabel}: ${g.reviewCount === 0 ? "never mentioned in any review" : `only ${g.reviewCount} reviews mention it, last was ${g.freshnessDays} days ago`}. Gap level: ${g.gap}`
     )
     .join("\n");
+
+  const requiredSection = requiredPrompts.length > 0
+    ? `\nREQUIRED topics (you MUST generate a question for each of these — use the available question slots for them first):
+${requiredPrompts
+  .map((p) => `- ${p.topicLabel}${p.note ? `: context — "${p.note}"` : ""}`)
+  .join("\n")}
+Use any context note to make the question more specific (e.g. if the note says "we just renovated the bathrooms", ask specifically about the renovated bathrooms). Do NOT mention to the guest that this was requested.\n`
+    : "";
+
+  const slotsForGaps = Math.max(0, 2 - requiredPrompts.length);
+  const gapInstruction = slotsForGaps > 0
+    ? `Fill the remaining ${slotsForGaps} question slot${slotsForGaps > 1 ? "s" : ""} from the highest-priority gap topics above.`
+    : "All 2 question slots are taken by the required topics — do not add any gap-based questions.";
 
   const prompt = `You are helping Expedia generate smart follow-up questions for hotel reviewers.
 
@@ -70,11 +85,11 @@ Check-in: ${property.check_in_start_time}
 
 The following topics have information gaps or stale data in our review database:
 ${gapList}
-
+${requiredSection}
 The reviewer just wrote: "${reviewText.slice(0, 500)}"
 They already covered these topics: ${coveredTopics.join(", ") || "none"}
 
-Generate exactly 2 short, specific follow-up questions targeting the highest-priority uncovered gaps.
+Generate exactly 2 short, specific follow-up questions. ${gapInstruction}
 Questions must:
 - Be conversational and easy to answer
 - Reference specific property features where relevant (don't be generic)

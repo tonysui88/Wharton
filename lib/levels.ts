@@ -6,7 +6,6 @@
  */
 
 export interface Perk {
-  icon: string;
   title: string;
   description: string;
 }
@@ -15,7 +14,6 @@ export interface Level {
   level: number;
   name: string;
   minPoints: number;
-  badge: string | null;
   color: string;
   perks: Perk[];
 }
@@ -25,7 +23,6 @@ export const LEVELS: Level[] = [
     level: 1,
     name: "Explorer",
     minPoints: 0,
-    badge: null,
     color: "#9ca3af",
     perks: [],
   },
@@ -33,111 +30,102 @@ export const LEVELS: Level[] = [
     level: 2,
     name: "Insider",
     minPoints: 15,
-    badge: null,
     color: "#6b7280",
     perks: [
-      { icon: "🏨", title: "Member Rates", description: "Access to exclusive member-only hotel rates on Expedia." },
+      { title: "Member Rates", description: "Access to exclusive member-only hotel rates on Expedia." },
     ],
   },
   {
     level: 3,
     name: "Local Expert",
     minPoints: 75,
-    badge: "⭐",
     color: "#f59e0b",
     perks: [
-      { icon: "🏨", title: "Member Rates", description: "Access to exclusive member-only hotel rates on Expedia." },
-      { icon: "⚡", title: "Flash Sale Early Access", description: "Get notified of flash sales 24 hours before they go public." },
+      { title: "Member Rates", description: "Access to exclusive member-only hotel rates on Expedia." },
+      { title: "Flash Sale Early Access", description: "Get notified of flash sales 24 hours before they go public." },
     ],
   },
   {
     level: 4,
     name: "Trusted Guide",
     minPoints: 250,
-    badge: "🌟",
     color: "#f59e0b",
     perks: [
-      { icon: "🏨", title: "Member Rates", description: "Access to exclusive member-only hotel rates on Expedia." },
-      { icon: "⚡", title: "Flash Sale Early Access", description: "Get notified of flash sales 48 hours before they go public." },
-      { icon: "🔔", title: "Deal Alerts", description: "First to know about last-minute price drops on hotels you've reviewed." },
-      { icon: "🎧", title: "Priority Support", description: "Skip the queue with dedicated priority customer support." },
+      { title: "Member Rates", description: "Access to exclusive member-only hotel rates on Expedia." },
+      { title: "Flash Sale Early Access", description: "Get notified of flash sales 48 hours before they go public." },
+      { title: "Deal Alerts", description: "First to know about last-minute price drops on hotels you've reviewed." },
+      { title: "Priority Support", description: "Skip the queue with dedicated priority customer support." },
     ],
   },
   {
     level: 5,
     name: "Platinum Guide",
     minPoints: 500,
-    badge: "💎",
     color: "#8b5cf6",
     perks: [
-      { icon: "🏨", title: "Member Rates", description: "Access to exclusive member-only hotel rates on Expedia." },
-      { icon: "⚡", title: "Flash Sale Early Access", description: "Get notified of flash sales 72 hours before they go public." },
-      { icon: "🔔", title: "Deal Alerts", description: "First to know about last-minute price drops on hotels you've reviewed." },
-      { icon: "💸", title: "10% Off Partner Hotels", description: "Automatic 10% discount at 500+ Expedia partner properties." },
-      { icon: "🛏️", title: "Complimentary Upgrades", description: "Room upgrade requests prioritised at select properties." },
+      { title: "Member Rates", description: "Access to exclusive member-only hotel rates on Expedia." },
+      { title: "Flash Sale Early Access", description: "Get notified of flash sales 72 hours before they go public." },
+      { title: "Deal Alerts", description: "First to know about last-minute price drops on hotels you've reviewed." },
+      { title: "10% Off Partner Hotels", description: "Automatic 10% discount at 500+ Expedia partner properties." },
+      { title: "Complimentary Upgrades", description: "Room upgrade requests prioritised at select properties." },
     ],
   },
   {
     level: 6,
     name: "Elite Guide",
     minPoints: 1500,
-    badge: "🏆",
     color: "#ec4899",
     perks: [
-      { icon: "⚡", title: "Flash Sale Early Access", description: "Get notified of flash sales 72 hours before public." },
-      { icon: "💸", title: "10% Off Partner Hotels", description: "Automatic 10% discount at 500+ Expedia partner properties." },
-      { icon: "🛋️", title: "Lounge Access", description: "Complimentary airport lounge access at 30+ international airports." },
-      { icon: "🏨", title: "VIP Hotel Previews", description: "Exclusive invitations to review new hotel openings before launch." },
-      { icon: "🎧", title: "Priority Support", description: "Dedicated VIP support line with 1-hour response guarantee." },
+      { title: "Flash Sale Early Access", description: "Get notified of flash sales 72 hours before public." },
+      { title: "10% Off Partner Hotels", description: "Automatic 10% discount at 500+ Expedia partner properties." },
+      { title: "Lounge Access", description: "Complimentary airport lounge access at 30+ international airports." },
+      { title: "VIP Hotel Previews", description: "Exclusive invitations to review new hotel openings before launch." },
+      { title: "Priority Support", description: "Dedicated VIP support line with 1-hour response guarantee." },
     ],
   },
   {
     level: 7,
     name: "Master Guide",
     minPoints: 5000,
-    badge: "👑",
     color: "#ef4444",
     perks: [
-      { icon: "💸", title: "15% Off All Hotels", description: "Automatic 15% discount on all Expedia hotel bookings." },
-      { icon: "🚗", title: "Free Airport Transfers", description: "Complimentary airport transfers at participating hotels." },
-      { icon: "🛋️", title: "Lounge Access", description: "Complimentary airport lounge access worldwide." },
-      { icon: "🤵", title: "Concierge Service", description: "Personal travel concierge available 24/7." },
-      { icon: "🏨", title: "VIP Hotel Previews", description: "First access to review and stay at new hotel openings." },
+      { title: "15% Off All Hotels", description: "Automatic 15% discount on all Expedia hotel bookings." },
+      { title: "Free Airport Transfers", description: "Complimentary airport transfers at participating hotels." },
+      { title: "Lounge Access", description: "Complimentary airport lounge access worldwide." },
+      { title: "Concierge Service", description: "Personal travel concierge available 24/7." },
+      { title: "VIP Hotel Previews", description: "First access to review and stay at new hotel openings." },
     ],
   },
   {
     level: 8,
     name: "Hall of Fame",
     minPoints: 15000,
-    badge: "🌠",
     color: "#06b6d4",
     perks: [
-      { icon: "💳", title: "Annual Travel Credit", description: "$200 annual Expedia travel credit." },
-      { icon: "💸", title: "20% Off All Hotels", description: "Automatic 20% discount on all Expedia hotel bookings." },
-      { icon: "🤵", title: "Concierge Service", description: "Personal travel concierge available 24/7." },
-      { icon: "✈️", title: "New Destination Access", description: "First to access curated stays in newly launched destinations." },
+      { title: "Annual Travel Credit", description: "$200 annual Expedia travel credit." },
+      { title: "20% Off All Hotels", description: "Automatic 20% discount on all Expedia hotel bookings." },
+      { title: "Concierge Service", description: "Personal travel concierge available 24/7." },
+      { title: "New Destination Access", description: "First to access curated stays in newly launched destinations." },
     ],
   },
   {
     level: 9,
     name: "Legend",
     minPoints: 50000,
-    badge: "🌍",
     color: "#10b981",
     perks: [
-      { icon: "🏨", title: "Complimentary Stays", description: "2 complimentary hotel nights per year at partner properties." },
-      { icon: "💳", title: "$500 Travel Credit", description: "Annual Expedia travel credit." },
-      { icon: "🌐", title: "Global Concierge", description: "24/7 global concierge with dedicated travel manager." },
+      { title: "Complimentary Stays", description: "2 complimentary hotel nights per year at partner properties." },
+      { title: "$500 Travel Credit", description: "Annual Expedia travel credit." },
+      { title: "Global Concierge", description: "24/7 global concierge with dedicated travel manager." },
     ],
   },
   {
     level: 10,
     name: "Icon",
     minPoints: 100000,
-    badge: "💫",
     color: "#f59e0b",
     perks: [
-      { icon: "✨", title: "Ultimate Access", description: "Lifetime top-tier benefits, personal travel advisor, and exclusive partner experiences." },
+      { title: "Ultimate Access", description: "Lifetime top-tier benefits, personal travel advisor, and exclusive partner experiences." },
     ],
   },
 ];

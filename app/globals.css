@@ -61,28 +61,37 @@
 }
 
 :root {
-  --background: #faf8f5;
-  --foreground: #1a1a2e;
+  /* Expedia brand palette */
+  --exp-navy:    #003580;   /* primary Expedia blue */
+  --exp-yellow:  #FFC72C;   /* Expedia yellow */
+  --exp-blue:    #006FCF;   /* secondary / link blue */
+  --exp-dark:    #1E243A;   /* header / sidebar bg */
+  --exp-bg:      #F5F7FA;   /* page background */
+  --exp-surface: #FFFFFF;   /* card / panel surface */
+  --exp-border:  #E4E7EF;   /* dividers */
+  --exp-text:    #1E243A;   /* primary text */
+  --exp-muted:   #64748B;   /* secondary text */
+
+  /* Shadcn / Tailwind tokens — mapped to Expedia palette */
+  --background: #F5F7FA;
+  --foreground: #1E243A;
   --card: #ffffff;
-  --card-foreground: #1a1a2e;
+  --card-foreground: #1E243A;
   --popover: #ffffff;
-  --popover-foreground: #1a1a2e;
-  --primary: #ff6b35;
+  --popover-foreground: #1E243A;
+  --primary: #003580;
   --primary-foreground: #ffffff;
-  --secondary: #f0ede8;
-  --secondary-foreground: #1a1a2e;
-  --muted: #f0ede8;
+  --secondary: #EEF2FF;
+  --secondary-foreground: #1E243A;
+  --muted: #EEF2FF;
   --muted-foreground: #64748b;
-  --accent: #ff6b35;
-  --accent-foreground: #ffffff;
+  --accent: #FFC72C;
+  --accent-foreground: #1E243A;
   --destructive: #ef4444;
-  --border: #e5e0d8;
-  --input: #e5e0d8;
-  --ring: #ff6b35;
+  --border: #E4E7EF;
+  --input: #E4E7EF;
+  --ring: #003580;
   --radius: 0.75rem;
-  --navy: #1a1a2e;
-  --coral: #ff6b35;
-  --cream: #faf8f5;
 }
 
 @layer base {
@@ -164,7 +173,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ff6b35, #f59e0b);
+  background: linear-gradient(135deg, #003580, #006FCF);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -180,7 +189,7 @@
 .step-dot.active {
   width: 24px;
   border-radius: 4px;
-  background: #ff6b35;
+  background: #003580;
 }
 .step-dot.done {
   background: #22c55e;

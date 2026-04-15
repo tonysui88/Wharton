@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, MapPin, Star, BarChart3 } from "lucide-react";
+import { MapPin, Star, ArrowLeft } from "lucide-react";
 import ReviewFlow from "@/components/ReviewFlow";
 
 interface ReviewPageClientProps {
@@ -22,7 +21,7 @@ function StarRow({ rating }: { rating: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
-          className={`w-4 h-4 ${i < Math.round(rating) ? "fill-amber-400 text-amber-400" : "fill-gray-200 text-gray-200"}`}
+          className={`w-3.5 h-3.5 ${i < Math.round(rating) ? "fill-[#FFC72C] text-[#FFC72C]" : "fill-white/20 text-white/20"}`}
         />
       ))}
     </div>
@@ -42,68 +41,60 @@ export default function ReviewPageClient({
   const [accountId, setAccountId] = useState("guest");
   const router = useRouter();
 
-  // Read account id from localStorage (set by TravelerHome on sign-in)
   useEffect(() => {
     const stored = localStorage.getItem("awm_account");
     if (stored) setAccountId(stored);
   }, []);
 
-  const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isDirty) {
-      e.preventDefault();
-      if (window.confirm("You have an unfinished review. Leave without saving?")) {
-        router.push("/");
-      }
-    }
+  const handleBack = () => {
+    if (isDirty && !window.confirm("You have an unfinished review. Leave without saving?")) return;
+    router.push("/");
   };
 
   return (
-    <div className="min-h-screen" style={{ background: "#faf8f5" }}>
+    <div className="min-h-screen flex flex-col" style={{ background: "#F5F7FA" }}>
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-2xl mx-auto px-6 py-3 flex items-center justify-between">
-          <a href="/" onClick={handleHomeClick} className="flex items-center gap-2.5">
-            <span className="font-bold text-[#003580] text-sm">Ask What Matters</span>
-          </a>
-          <div className="flex items-center gap-4">
-            <Link href="/manager" className="flex items-center gap-1.5 text-xs font-medium text-gray-400 hover:text-gray-600 transition-colors">
-              <BarChart3 className="w-3.5 h-3.5" />
-              Manager View
-            </Link>
-            <a
-              href="/"
-              onClick={handleHomeClick}
-              className="flex items-center gap-1.5 text-xs font-medium text-gray-500 hover:text-[#1E243A] transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              Change hotel
-            </a>
-          </div>
+      <header className="sticky top-0 z-50 bg-white border-b border-[#E4E7EF]">
+        <div className="max-w-xl mx-auto h-14 px-4 flex items-center justify-between">
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-[#003580] transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span className="hidden sm:inline">Back</span>
+          </button>
+          <Link href="/"><img src="/Expedia-Logo.png" alt="Expedia" className="h-14 w-auto" /></Link>
+          {/* Spacer to balance back button */}
+          <div className="w-16" />
         </div>
       </header>
 
-      {/* Property context */}
-      <div style={{ background: "linear-gradient(160deg, #FCDB32 0%, #FCDB32 60%, #FDE97A 100%)" }}>
-        <div className="max-w-2xl mx-auto px-6 py-6">
-          <div className="flex items-center gap-4">
-            <div>
+      {/* Property banner */}
+      <div style={{ background: "linear-gradient(160deg, #003580 0%, #006FCF 100%)" }}>
+        <div className="max-w-xl mx-auto px-4 py-5">
+          <div className="flex items-start gap-3">
+            <div className="flex-1 min-w-0">
               {starRating > 0 && (
-                <div className="mb-0.5">
+                <div className="mb-1">
                   <StarRow rating={starRating} />
                 </div>
               )}
-              <h1 className="text-lg font-bold text-[#1E243A] leading-tight">{propertyName}</h1>
-              <div className="flex items-center gap-1 text-[#1E243A]/60 text-sm">
-                <MapPin className="w-3 h-3" />
-                <span>{location}</span>
+              <h1 className="text-base font-bold text-white leading-tight">{propertyName}</h1>
+              <div className="flex items-center gap-1 text-white/60 text-xs mt-0.5">
+                <MapPin className="w-3 h-3 flex-shrink-0" />
+                <span className="truncate">{location}</span>
               </div>
+            </div>
+            <div className="flex-shrink-0 bg-white/10 rounded-xl px-3 py-2 text-center">
+              <p className="text-xs text-white/60">Your stay</p>
+              <p className="text-xs font-semibold text-white">{city}</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Review flow */}
-      <main className="max-w-2xl mx-auto px-6 py-8">
+      <main className="flex-1 max-w-xl mx-auto w-full px-4 py-6">
         <ReviewFlow
           propertyId={propertyId}
           propertyName={propertyName}

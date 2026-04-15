@@ -1,11 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { TopicAnalysis } from "@/lib/analysis";
+import { Review } from "@/lib/data";
+import { classifyText } from "@/lib/topics";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, TrendingDown, Clock, CheckCircle, MinusCircle } from "lucide-react";
+import { AlertTriangle, TrendingDown, Clock, CheckCircle, MinusCircle, X, ChevronDown } from "lucide-react";
 
 interface TopicCoverageMapProps {
   topics: TopicAnalysis[];
+  reviews?: Review[];
 }
 
 function SentimentBadge({ sentiment }: { sentiment: string }) {
@@ -37,18 +41,87 @@ function coverageColor(score: number): string {
   return "#e5e0d8";
 }
 
-export default function TopicCoverageMap({ topics }: TopicCoverageMapProps) {
+export default function TopicCoverageMap({ topics, reviews = [] }: TopicCoverageMapProps) {
+  const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
   const relevantTopics = topics.filter((t) => t.isRelevant);
   const irrelevantTopics = topics.filter((t) => !t.isRelevant);
+
+  const selectedTopic = relevantTopics.find((t) => t.topicId === selectedTopicId) ?? null;
+
+  // Find reviews that mention the selected topic
+  const topicReviews = selectedTopicId
+    ? reviews.filter((r) => {
+        if (!r.review_text?.trim()) return false;
+        return classifyText(r.review_text).has(selectedTopicId);
+      }).slice(0, 10)
+    : [];
+
+  const handleSelect = (topicId: string) => {
+    setSelectedTopicId((prev) => (prev === topicId ? null : topicId));
+  };
 
   return (
     <div>
       {/* Grid heatmap */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
         {relevantTopics.map((topic) => (
-          <TopicCell key={topic.topicId} topic={topic} />
+          <TopicCell
+            key={topic.topicId}
+            topic={topic}
+            isSelected={selectedTopicId === topic.topicId}
+            onClick={() => handleSelect(topic.topicId)}
+          />
         ))}
       </div>
+
+      {/* Expanded review panel */}
+      {selectedTopic && (
+        <div className="mb-6 bg-white rounded-2xl border border-[#e5e0d8] overflow-hidden">
+          <div className="px-5 py-3 border-b border-[#e5e0d8] flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <GapIcon gap={selectedTopic.gap} />
+              <span className="text-sm font-bold text-[#1a1a2e]">{selectedTopic.topicLabel}</span>
+              <span className="text-xs text-gray-400">
+                {selectedTopic.reviewCount} {selectedTopic.reviewCount === 1 ? "review mentions this topic" : "reviews mention this topic"}
+              </span>
+            </div>
+            <button
+              onClick={() => setSelectedTopicId(null)}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {topicReviews.length === 0 ? (
+            <div className="px-5 py-8 text-center">
+              <p className="text-sm text-gray-400">No reviews mention this topic yet.</p>
+              <p className="text-xs text-gray-300 mt-1">This is a knowledge gap — prompt travelers to share their experience.</p>
+            </div>
+          ) : (
+            <div className="divide-y divide-[#f0ede8]">
+              {topicReviews.map((r, i) => (
+                <div key={i} className="px-5 py-3">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium text-gray-400">
+                      {r.acquisition_date} · {r.rating.overall > 0 ? `${r.rating.overall}/5` : ""}
+                    </span>
+                  </div>
+                  {r.review_title && (
+                    <p className="text-xs font-semibold text-[#1a1a2e] mb-0.5">{r.review_title}</p>
+                  )}
+                  <p className="text-sm text-gray-600 leading-relaxed line-clamp-4">{r.review_text}</p>
+                </div>
+              ))}
+              {selectedTopic.reviewCount > 10 && (
+                <div className="px-5 py-3 text-center">
+                  <p className="text-xs text-gray-400">Showing 10 of {selectedTopic.reviewCount} reviews</p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Not applicable */}
       {irrelevantTopics.length > 0 && (
@@ -73,18 +146,45 @@ export default function TopicCoverageMap({ topics }: TopicCoverageMapProps) {
 }
 
 
-function TopicCell({ topic }: { topic: TopicAnalysis }) {
-  const bgColor = topic.reviewCount === 0 ? "#fef2f2" : topic.gap === "none" ? "#f0fdf4" : "#fffbeb";
-  const borderColor = topic.reviewCount === 0 ? "#fecaca" : topic.gap === "none" ? "#bbf7d0" : "#fde68a";
+function TopicCell({
+  topic,
+  isSelected,
+  onClick,
+}: {
+  topic: TopicAnalysis;
+  isSelected: boolean;
+  onClick: () => void;
+}) {
+  const bgColor = isSelected
+    ? "#eff6ff"
+    : topic.reviewCount === 0
+    ? "#fef2f2"
+    : topic.gap === "none"
+    ? "#f0fdf4"
+    : "#fffbeb";
+
+  const borderColor = isSelected
+    ? "#3b82f6"
+    : topic.reviewCount === 0
+    ? "#fecaca"
+    : topic.gap === "none"
+    ? "#bbf7d0"
+    : "#fde68a";
 
   return (
-    <div
-      className="rounded-xl p-3 border"
+    <button
+      onClick={onClick}
+      className="rounded-xl p-3 border text-left w-full transition-all hover:shadow-sm hover:scale-[1.01] active:scale-[0.99]"
       style={{ background: bgColor, borderColor }}
     >
       <div className="flex items-start justify-between gap-1 mb-2">
         <span className="text-sm font-semibold text-[#1a1a2e] leading-tight">{topic.topicLabel}</span>
-        <GapIcon gap={topic.gap} />
+        <div className="flex items-center gap-1 flex-shrink-0">
+          <GapIcon gap={topic.gap} />
+          <ChevronDown
+            className={`w-3 h-3 text-gray-400 transition-transform ${isSelected ? "rotate-180" : ""}`}
+          />
+        </div>
       </div>
 
       {/* Coverage bar */}
@@ -127,7 +227,6 @@ function TopicCell({ topic }: { topic: TopicAnalysis }) {
           Last: {new Date(topic.lastMentionDate).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
         </div>
       )}
-
-    </div>
+    </button>
   );
 }

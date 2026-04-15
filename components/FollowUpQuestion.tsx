@@ -1,21 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
-import { CheckCircle2, MessageCircle, Mic } from "lucide-react";
-
-const VoiceInput = dynamic(() => import("./VoiceInput"), {
-  ssr: false,
-  loading: () => (
-    <button disabled className="p-3 rounded-full bg-gray-100 text-gray-300 cursor-not-allowed">
-      <Mic className="w-4 h-4" />
-    </button>
-  ),
-});
+import { CheckCircle2, MessageCircle } from "lucide-react";
 
 export interface FollowUpQuestion {
   question: string;
   type: "text" | "yes_no" | "multiple_choice";
+  scaleType?: "agreement" | "quality"; // for "text" type: which 5-point scale to show
   options?: string[];
   topic: string;
   topicId: string;
@@ -28,23 +19,180 @@ interface FollowUpQuestionCardProps {
   onAnswer: (topicId: string, answer: string, type: FollowUpQuestion["type"]) => void;
 }
 
+// ── Likert scale config ────────────────────────────────────────────────────────
+
+const AGREEMENT_SCALE = [
+  { label: "Strongly\nDisagree", short: "Strongly Disagree", color: "#ef4444" },
+  { label: "Disagree",           short: "Disagree",          color: "#f97316" },
+  { label: "Neutral",            short: "Neutral",           color: "#6b7280" },
+  { label: "Agree",              short: "Agree",             color: "#22c55e" },
+  { label: "Strongly\nAgree",    short: "Strongly Agree",    color: "#16a34a" },
+];
+
+const QUALITY_SCALE = [
+  { label: "Very\nPoor",    short: "Very Poor",  color: "#ef4444" },
+  { label: "Poor",          short: "Poor",       color: "#f97316" },
+  { label: "Average",       short: "Average",    color: "#6b7280" },
+  { label: "Good",          short: "Good",       color: "#22c55e" },
+  { label: "Excellent",     short: "Excellent",  color: "#16a34a" },
+];
+
+// ── Likert input ───────────────────────────────────────────────────────────────
+
+function LikertInput({
+  onSubmit,
+  scale,
+}: {
+  onSubmit: (answer: string) => void;
+  scale: "agreement" | "quality";
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [elaboration, setElaboration] = useState("");
+
+  const LIKERT = scale === "quality" ? QUALITY_SCALE : AGREEMENT_SCALE;
+  const chosen = selected !== null ? LIKERT[selected] : null;
+
+  const handleDone = () => {
+    if (!chosen) return;
+    const combined = elaboration.trim()
+      ? `${chosen.short} — ${elaboration.trim()}`
+      : chosen.short;
+    onSubmit(combined);
+  };
+
+  return (
+    <div className="mt-3 space-y-3">
+      {/* 5-button scale */}
+      <div className="flex gap-1.5">
+        {LIKERT.map((opt, i) => {
+          const isSelected = selected === i;
+          return (
+            <button
+              key={i}
+              onClick={() => setSelected(i)}
+              className="flex-1 flex flex-col items-center gap-1 py-2.5 px-1 rounded-xl border transition-all duration-150 active:scale-95"
+              style={{
+                background: isSelected ? opt.color : "white",
+                borderColor: isSelected ? opt.color : "#e5e0d8",
+                boxShadow: isSelected ? `0 0 0 2px ${opt.color}40` : "none",
+              }}
+            >
+              {/* Dot indicator */}
+              <div
+                className="w-2.5 h-2.5 rounded-full transition-all"
+                style={{ background: isSelected ? "white" : opt.color, opacity: isSelected ? 1 : 0.6 }}
+              />
+              <span
+                className="text-[10px] font-semibold leading-tight text-center whitespace-pre-line"
+                style={{ color: isSelected ? "white" : opt.color }}
+              >
+                {opt.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Optional elaboration */}
+      {chosen && (
+        <div className="space-y-2 animate-fade-in">
+          <textarea
+            value={elaboration}
+            onChange={(e) => setElaboration(e.target.value)}
+            placeholder="Want to add more detail? (optional)"
+            rows={2}
+            className="w-full text-sm rounded-xl border border-[#e5e0d8] bg-white px-3 py-2 resize-none focus:outline-none focus:border-[#ff6b35] focus:ring-1 focus:ring-[#ff6b3533]"
+          />
+          <button
+            onClick={handleDone}
+            className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95"
+            style={{ background: `linear-gradient(135deg, ${chosen.color}, ${chosen.color}cc)` }}
+          >
+            Done
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Yes / No input ─────────────────────────────────────────────────────────────
+
+function YesNoInput({ onSubmit }: { onSubmit: (answer: string) => void }) {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [elaboration, setElaboration] = useState("");
+
+  const handleDone = () => {
+    if (!selected) return;
+    const combined = elaboration.trim() ? `${selected} — ${elaboration.trim()}` : selected;
+    onSubmit(combined);
+  };
+
+  return (
+    <div className="mt-3 space-y-3">
+      <div className="flex gap-3">
+        {["Yes", "No"].map((opt) => {
+          const isSelected = selected === opt;
+          const color = opt === "Yes" ? "#22c55e" : "#ef4444";
+          return (
+            <button
+              key={opt}
+              onClick={() => setSelected(opt)}
+              className="flex-1 py-2.5 rounded-xl text-sm font-semibold border transition-all duration-200 hover:opacity-90 active:scale-95"
+              style={{
+                background: isSelected ? color : "white",
+                color: isSelected ? "white" : color,
+                borderColor: color,
+                boxShadow: isSelected ? `0 0 0 2px ${color}40` : "none",
+              }}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+
+      {selected && (
+        <div className="space-y-2 animate-fade-in">
+          <textarea
+            value={elaboration}
+            onChange={(e) => setElaboration(e.target.value)}
+            placeholder="Want to add more detail? (optional)"
+            rows={2}
+            className="w-full text-sm rounded-xl border border-[#e5e0d8] bg-white px-3 py-2 resize-none focus:outline-none focus:border-[#ff6b35] focus:ring-1 focus:ring-[#ff6b3533]"
+          />
+          <button
+            onClick={handleDone}
+            className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95"
+            style={{ background: "linear-gradient(135deg, #1a1a2e, #16213e)" }}
+          >
+            Done
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Main card ──────────────────────────────────────────────────────────────────
+
 export default function FollowUpQuestionCard({
   question,
   index,
   onAnswer,
 }: FollowUpQuestionCardProps) {
-  const [answer, setAnswer] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [submittedAnswer, setSubmittedAnswer] = useState("");
 
   const handleSubmit = (ans: string) => {
     if (!ans.trim()) return;
+    setSubmittedAnswer(ans);
     setSubmitted(true);
     onAnswer(question.topicId, ans, question.type);
   };
 
   const priorityColor = question.priority === "high" ? "#ef4444" : "#f59e0b";
-  const priorityBg = question.priority === "high" ? "#fef2f2" : "#fffbeb";
+  const priorityBg    = question.priority === "high" ? "#fef2f2" : "#fffbeb";
   const priorityBorder = question.priority === "high" ? "#fecaca" : "#fde68a";
 
   if (submitted) {
@@ -57,7 +205,7 @@ export default function FollowUpQuestionCard({
           <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
           <div>
             <p className="text-sm font-medium text-green-800">{question.question}</p>
-            <p className="text-sm text-green-700 mt-1">"{answer || selectedOption}"</p>
+            <p className="text-sm text-green-700 mt-1">&ldquo;{submittedAnswer}&rdquo;</p>
           </div>
         </div>
       </div>
@@ -70,14 +218,11 @@ export default function FollowUpQuestionCard({
       style={{ background: priorityBg, borderColor: priorityBorder }}
     >
       {/* Header */}
-      <div className="flex items-start gap-2 mb-3">
+      <div className="flex items-start gap-2 mb-1">
         <MessageCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: priorityColor }} />
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span
-              className="text-xs font-semibold uppercase tracking-wide"
-              style={{ color: priorityColor }}
-            >
+            <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: priorityColor }}>
               {question.topic}
             </span>
             <span
@@ -87,38 +232,19 @@ export default function FollowUpQuestionCard({
               {question.priority} priority
             </span>
           </div>
-          <p className="text-sm font-semibold text-[#1a1a2e] leading-snug">
-            {question.question}
-          </p>
+          <p className="text-sm font-semibold text-[#1a1a2e] leading-snug">{question.question}</p>
         </div>
       </div>
 
-      {/* Input based on type */}
-      {question.type === "yes_no" && (
-        <div className="flex gap-3 mt-3">
-          {["Yes", "No"].map((opt) => (
-            <button
-              key={opt}
-              onClick={() => { setSelectedOption(opt); handleSubmit(opt); }}
-              className="flex-1 py-2.5 rounded-xl text-sm font-semibold border transition-all duration-200 hover:opacity-90 active:scale-95"
-              style={{
-                background: opt === "Yes" ? "#22c55e" : "#ef4444",
-                color: "white",
-                borderColor: "transparent",
-              }}
-            >
-              {opt}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {question.type === "multiple_choice" && question.options && (
+      {/* Input */}
+      {question.type === "yes_no" ? (
+        <YesNoInput onSubmit={handleSubmit} />
+      ) : question.type === "multiple_choice" && question.options ? (
         <div className="flex flex-col gap-2 mt-3">
           {question.options.map((opt) => (
             <button
               key={opt}
-              onClick={() => { setSelectedOption(opt); handleSubmit(opt); }}
+              onClick={() => handleSubmit(opt)}
               className="py-2.5 px-4 rounded-xl text-sm font-medium border text-left transition-all duration-200 hover:border-[#ff6b35] hover:bg-white active:scale-[0.98]"
               style={{ borderColor: "#e5e0d8", background: "white" }}
             >
@@ -126,38 +252,8 @@ export default function FollowUpQuestionCard({
             </button>
           ))}
         </div>
-      )}
-
-      {question.type === "text" && (
-        <div className="mt-3">
-          <div className="flex gap-2 items-end">
-            <textarea
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              placeholder="Type your answer..."
-              rows={2}
-              className="flex-1 text-sm rounded-xl border border-[#e5e0d8] bg-white px-3 py-2 resize-none focus:outline-none focus:border-[#ff6b35] focus:ring-1 focus:ring-[#ff6b3533]"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  handleSubmit(answer);
-                }
-              }}
-            />
-            <VoiceInput
-              onTranscript={(t) => setAnswer((prev) => (prev ? prev + " " + t : t))}
-            />
-          </div>
-          {answer.trim() && (
-            <button
-              onClick={() => handleSubmit(answer)}
-              className="mt-2 w-full py-2 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 active:scale-95"
-              style={{ background: "linear-gradient(135deg, #ff6b35, #f59e0b)" }}
-            >
-              Submit Answer
-            </button>
-          )}
-        </div>
+      ) : (
+        <LikertInput onSubmit={handleSubmit} scale={question.scaleType ?? "agreement"} />
       )}
     </div>
   );

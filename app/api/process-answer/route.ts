@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { loadProperties, getReviewsForProperty } from "@/lib/data";
-import { analyzeProperty, computeNewHealthScore, invalidateAnalysisCache } from "@/lib/analysis";
+import { analyzeProperty, invalidateAnalysisCache } from "@/lib/analysis";
 import { checkAnswerQuality } from "@/lib/quality";
 import { reviewStore, LiveReview, LiveAnswer } from "@/lib/store";
 import { generateHotelDisplayName } from "@/lib/utils";
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
     const reviewTopicIds = Array.isArray(coveredTopicIds) ? coveredTopicIds : [];
     const improvedTopics = [...new Set([...answerTopicIds, ...reviewTopicIds])];
 
-    const newScore = computeNewHealthScore(analysisAfter, improvedTopics);
+    const newScore = analysisAfter.knowledgeHealthScore;
     const improvement = newScore - previousScore;
 
     // ── Push event for SSE (manager notifications) ───────────────────────────

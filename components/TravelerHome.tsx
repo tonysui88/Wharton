@@ -7,6 +7,7 @@ import {
   MapPin, ArrowRight, Search, LogOut, Star, ChevronRight, BarChart3
 } from "lucide-react";
 import { DEMO_ACCOUNTS, TIER_COLORS, DemoAccount } from "@/lib/accounts";
+import { initAccountPoints, getStoredPoints, getLevel } from "@/lib/levels";
 
 interface Hotel {
   id: string;
@@ -64,9 +65,12 @@ function LoggedInView({
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-3xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link href="/" className="font-bold text-[#003580] text-base tracking-tight">
+          <button
+            onClick={onSignOut}
+            className="font-bold text-[#003580] text-base tracking-tight hover:opacity-70 transition-opacity"
+          >
             Ask What Matters
-          </Link>
+          </button>
           <div className="flex items-center gap-4">
             <Link
               href="/manager"
@@ -340,6 +344,7 @@ export default function TravelerHome({ hotels }: TravelerHomeProps) {
 
   const handleSelectAccount = (a: DemoAccount) => {
     localStorage.setItem(STORAGE_KEY, a.id);
+    initAccountPoints(a.id, a.startingPoints);
     setAccount(a);
   };
 

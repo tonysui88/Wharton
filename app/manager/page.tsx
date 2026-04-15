@@ -5,9 +5,11 @@ import { generateHotelDisplayName } from "@/lib/utils";
 import { reviewStore } from "@/lib/store";
 import {
   ArrowRight, MapPin, BarChart3, Users, TrendingUp, Activity,
-  AlertTriangle, CheckCircle2, User,
+  AlertTriangle, CheckCircle2, User, Flame,
 } from "lucide-react";
 import ManagerNotifications from "@/components/ManagerNotifications";
+import { getAlertCount } from "@/lib/sentiment-alerts";
+import LiveReviewsFeed, { LiveReviewEvent } from "@/components/LiveReviewsFeed";
 
 export const dynamic = "force-dynamic";
 
@@ -46,6 +48,8 @@ export default function ManagerPage() {
         .filter((t) => t.isRelevant && t.gap !== "none")
         .sort((a, b) => a.coverageScore - b.coverageScore)[0];
 
+      const alertCounts = getAlertCount(property.eg_property_id);
+
       return {
         id: property.eg_property_id,
         name: generateHotelDisplayName(
@@ -60,6 +64,8 @@ export default function ManagerPage() {
         totalReviews: analysis.totalReviews,
         topGap: topGap?.topicLabel ?? null,
         gapCount: analysis.topGaps.length,
+        urgentAlerts: alertCounts.urgent,
+        watchAlerts: alertCounts.watch,
       };
     })
     .sort((a, b) => a.healthScore - b.healthScore);
@@ -68,6 +74,15 @@ export default function ManagerPage() {
   const totalReviews = rows.reduce((s, r) => s + r.totalReviews, 0);
   const liveToday = reviewStore.getTotalLiveReviews();
   const propertiesNeedingAttention = rows.filter((r) => r.healthScore < 50).length;
+  const recentEvents: LiveReviewEvent[] = reviewStore.getRecentEvents(20).map((event) => {
+    const liveReviews = reviewStore.getLiveReviewsForProperty(event.propertyId);
+    const liveReview = liveReviews.find((r) => r.id === event.id);
+    return {
+      ...event,
+      submittedAt: event.submittedAt.toISOString(),
+      answers: liveReview?.answers ?? [],
+    };
+  });
 
   return (
     <div className="min-h-screen" style={{ background: "#f5f7fa" }}>
@@ -150,6 +165,24 @@ export default function ManagerPage() {
           </div>
         </div>
 
+        {/* Live reviews feed */}
+        <LiveReviewsFeed events={recentEvents} />
+
+        {/* Section header */}
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-bold text-[#1E243A]">All Properties</h2>
+            <p className="text-sm text-gray-500">
+              Sorted by health score — lowest first.
+              {propertiesNeedingAttention > 0 && (
+                <span className="ml-1 text-amber-600 font-medium">
+                  {propertiesNeedingAttention} {propertiesNeedingAttention === 1 ? "property needs" : "properties need"} attention.
+                </span>
+              )}
+            </p>
+          </div>
+        </div>
+
         {/* Property rows */}
         <div className="space-y-2">
           {rows.map((row) => (
@@ -158,10 +191,8 @@ export default function ManagerPage() {
               href={`/property/${row.id}`}
               className="flex items-center gap-4 bg-white rounded-2xl border border-gray-100 px-5 py-4 hover:border-[#1E243A] hover:shadow-sm transition-all group"
             >
-              {/* Health score */}
               <HealthBadge score={row.healthScore} />
 
-              {/* Name + location */}
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-[#1E243A] truncate group-hover:text-[#003580] transition-colors">
                   {row.name}
@@ -172,13 +203,11 @@ export default function ManagerPage() {
                 </div>
               </div>
 
-              {/* Review count */}
               <div className="hidden sm:block text-center flex-shrink-0 w-20">
                 <p className="text-sm font-semibold text-[#1E243A]">{row.totalReviews.toLocaleString()}</p>
                 <p className="text-xs text-gray-400">reviews</p>
               </div>
 
-              {/* Guest rating */}
               {row.guestRating > 0 ? (
                 <div className="hidden md:block text-center flex-shrink-0 w-20">
                   <p className="text-sm font-semibold text-[#003580]">{row.guestRating.toFixed(1)}</p>
@@ -188,14 +217,25 @@ export default function ManagerPage() {
                 <div className="hidden md:block w-20" />
               )}
 
-              {/* Top gap */}
-              <div className="hidden lg:flex flex-shrink-0 w-44 items-center">
-                {row.topGap ? (
+              <div className="hidden lg:flex flex-shrink-0 w-44 items-center gap-2">
+                {row.urgentAlerts > 0 && (
+                  <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-red-50 text-red-600 border border-red-200">
+                    <Flame className="w-3 h-3" />
+                    {row.urgentAlerts} urgent
+                  </span>
+                )}
+                {row.watchAlerts > 0 && (
+                  <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-600 border border-amber-200">
+                    {row.watchAlerts} watch
+                  </span>
+                )}
+                {row.urgentAlerts === 0 && row.watchAlerts === 0 && row.topGap && (
                   <div className="flex items-center gap-1.5">
                     <AlertTriangle className="w-3 h-3 text-amber-500 flex-shrink-0" />
                     <GapPill label={row.topGap} />
                   </div>
-                ) : (
+                )}
+                {row.urgentAlerts === 0 && row.watchAlerts === 0 && !row.topGap && (
                   <div className="flex items-center gap-1.5 text-xs text-green-600 font-medium">
                     <CheckCircle2 className="w-3 h-3" />
                     Well covered
@@ -203,7 +243,6 @@ export default function ManagerPage() {
                 )}
               </div>
 
-              {/* Arrow */}
               <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#1E243A] transition-colors flex-shrink-0" />
             </Link>
           ))}

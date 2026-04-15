@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, MapPin, Star, BarChart3 } from "lucide-react";
@@ -39,7 +39,14 @@ export default function ReviewPageClient({
   currentHealthScore,
 }: ReviewPageClientProps) {
   const [isDirty, setIsDirty] = useState(false);
+  const [accountId, setAccountId] = useState("guest");
   const router = useRouter();
+
+  // Read account id from localStorage (set by TravelerHome on sign-in)
+  useEffect(() => {
+    const stored = localStorage.getItem("awm_account");
+    if (stored) setAccountId(stored);
+  }, []);
 
   const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (isDirty) {
@@ -104,6 +111,7 @@ export default function ReviewPageClient({
           country={country}
           currentHealthScore={currentHealthScore}
           onDirtyChange={setIsDirty}
+          accountId={accountId}
         />
       </main>
     </div>

@@ -43,7 +43,10 @@ export async function POST(request: Request) {
       )
       .sort((a, b) => {
         const order = { high: 0, medium: 1, low: 2, none: 3 };
-        return order[a.gap] - order[b.gap];
+        const diff = order[a.gap] - order[b.gap];
+        // Within the same severity tier, shuffle randomly so the same 2 topics
+        // don't win every time across all hotels
+        return diff !== 0 ? diff : Math.random() - 0.5;
       });
 
     const questions = await generateFollowUpQuestions(

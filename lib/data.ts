@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
+import { reviewStore } from "./store";
 
 export interface Property {
   eg_property_id: string;
@@ -166,7 +167,6 @@ export function getReviewsForProperty(propertyId: string): Review[] {
   const csvReviews = loadReviews().filter((r) => r.eg_property_id === propertyId);
 
   // Merge in any live reviews submitted during this server session
-  const { reviewStore } = require("./store") as typeof import("./store");
   const liveReviews = reviewStore
     .getLiveReviewsForProperty(propertyId)
     .map((r) => reviewStore.toReviewShape(r) as Review);

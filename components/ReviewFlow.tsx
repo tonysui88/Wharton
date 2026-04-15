@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Star, ArrowRight, Loader2, Mic, AlertCircle } from "lucide-react";
 import FollowUpQuestionCard, { FollowUpQuestion } from "./FollowUpQuestion";
-import BeforeAfterScore from "./BeforeAfterScore";
+import ReviewerImpact from "./ReviewerImpact";
 import KnowledgeHealthScore from "./KnowledgeHealthScore";
 import { checkTextQuality } from "@/lib/quality";
 
@@ -25,6 +25,7 @@ interface ReviewFlowProps {
   country: string;
   currentHealthScore: number;
   onDirtyChange?: (dirty: boolean) => void;
+  accountId?: string;
 }
 
 type Step = "write" | "questions" | "thankyou";
@@ -43,6 +44,7 @@ export default function ReviewFlow({
   country,
   currentHealthScore,
   onDirtyChange,
+  accountId = "guest",
 }: ReviewFlowProps) {
   const [step, setStep] = useState<Step>("write");
   const [overallRating, setOverallRating] = useState(0);
@@ -249,11 +251,11 @@ export default function ReviewFlow({
         )}
 
         {step === "thankyou" && scoreResult && (
-          <div className="flex flex-col items-center">
-            <BeforeAfterScore
-              previousScore={scoreResult.previousScore}
-              newScore={scoreResult.newScore}
-              improvement={scoreResult.improvement}
+          <div className="flex flex-col items-center w-full">
+            <ReviewerImpact
+              accountId={accountId}
+              reviewText={reviewText}
+              answerCount={answers.length}
               improvedTopics={scoreResult.improvedTopics}
             />
             

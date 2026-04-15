@@ -117,7 +117,14 @@ class ReviewStore {
 
   toReviewShape(live: LiveReview): ReviewShape {
     // Sub-ratings are 0 because we don't collect them in the review flow.
-    // The overall rating and review_text are what drive scoring for live reviews.
+    // Append follow-up answers to review_text so analyzeProperty can classify
+    // them as topic coverage — otherwise a review with no written text but with
+    // answers would contribute nothing to the health score.
+    const answerText = live.answers
+      .map((a) => `${a.topicLabel}: ${a.answer}`)
+      .join(". ");
+    const fullText = [live.reviewText, answerText].filter(Boolean).join(". ");
+
     return {
       eg_property_id: live.propertyId,
       acquisition_date: formatDateMDYY(live.submittedAt),
@@ -140,7 +147,7 @@ class ReviewStore {
         location: 0,
       },
       review_title: "",
-      review_text: live.reviewText,
+      review_text: fullText,
     };
   }
 

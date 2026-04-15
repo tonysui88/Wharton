@@ -1,0 +1,303 @@
+{
+  "110f01b8ae518a0ee41047bce5c22572988a435e10ead72dc1af793bba8ce0b0": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "food_breakfast",
+        "topicLabel": "Food & Breakfast",
+        "recentSentiment": "neutral",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent guests have noted a decline in the quality of breakfast offerings.",
+        "recentReviewCount": 21,
+        "historicalReviewCount": 18
+      }
+    ]
+  },
+  "db38b19b897dbece3e34919c662b3fd66d23b615395d11fb69264dd3a9b17723": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "cleanliness",
+        "topicLabel": "Cleanliness",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests increasingly report issues with room disrepair and cleanliness, including malfunctioning showers and toilets.",
+        "recentReviewCount": 44,
+        "historicalReviewCount": 109
+      },
+      {
+        "topicId": "pool_fitness",
+        "topicLabel": "Pool & Fitness",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent complaints about pool closures and additional fees indicate a decline in guest satisfaction.",
+        "recentReviewCount": 32,
+        "historicalReviewCount": 116
+      },
+      {
+        "topicId": "bathroom",
+        "topicLabel": "Bathroom",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests are reporting significant issues with bathroom facilities, including malfunctioning showers and toilets.",
+        "recentReviewCount": 4,
+        "historicalReviewCount": 15
+      },
+      {
+        "topicId": "spa_wellness",
+        "topicLabel": "Spa & Wellness",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent feedback indicates dissatisfaction with spa services and facilities, including issues with reservations and hot tub functionality.",
+        "recentReviewCount": 8,
+        "historicalReviewCount": 15
+      }
+    ]
+  },
+  "5f5a0cd8662f0ddf297f2d27358f680daab5d3ac22fd45a4e1c3c3ec2c101a12": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": []
+  },
+  "3b984f3ba8df55b2609a1e33fd694cf8407842e1d833c9b4d993b07fc83a2820": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "cleanliness",
+        "topicLabel": "Cleanliness",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests are increasingly reporting issues with noise pollution from the casino affecting their sleep quality.",
+        "recentReviewCount": 2,
+        "historicalReviewCount": 6
+      },
+      {
+        "topicId": "parking",
+        "topicLabel": "Parking",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent guests have noted that the parking situation is limited and becoming a concern.",
+        "recentReviewCount": 2,
+        "historicalReviewCount": 7
+      }
+    ]
+  },
+  "9a0043fd4258a1286db1e253ca591662b3aac849da12d0d4f67e08b8f59be65f": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": []
+  },
+  "e52d67a758ce4ad0229aacc97e5dfe89984c384c51a70208f9e0cc65c9cd4676": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": []
+  },
+  "ff26cdda236b233f7c481f0e896814075ac6bed335e162e0ff01d5491343f838": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "cleanliness",
+        "topicLabel": "Cleanliness",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests are increasingly reporting issues with cleanliness, including mold and unaddressed maintenance problems.",
+        "recentReviewCount": 64,
+        "historicalReviewCount": 188
+      },
+      {
+        "topicId": "food_breakfast",
+        "topicLabel": "Food & Breakfast",
+        "recentSentiment": "neutral",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Guests have expressed concerns about the restaurant's service and availability of breakfast options.",
+        "recentReviewCount": 38,
+        "historicalReviewCount": 71
+      },
+      {
+        "topicId": "checkin_checkout",
+        "topicLabel": "Check-in & Check-out",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent reviews indicate dissatisfaction with check-in experiences and unexpected charges.",
+        "recentReviewCount": 7,
+        "historicalReviewCount": 39
+      },
+      {
+        "topicId": "bathroom",
+        "topicLabel": "Bathroom",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests are reporting significant issues with bathroom cleanliness and maintenance, including leaks.",
+        "recentReviewCount": 4,
+        "historicalReviewCount": 31
+      },
+      {
+        "topicId": "staff_service",
+        "topicLabel": "Staff & Service",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Recent reviews indicate a decline in staff friendliness and responsiveness to guest needs.",
+        "recentReviewCount": 78,
+        "historicalReviewCount": 224
+      }
+    ]
+  },
+  "fa014137b3ea9af6a90c0a86a1d099e46f7e56d6eb33db1ad1ec4bdac68c3caa": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "bathroom",
+        "topicLabel": "Bathroom",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent reviews highlight complaints about small bathrooms and poor design.",
+        "recentReviewCount": 3,
+        "historicalReviewCount": 7
+      },
+      {
+        "topicId": "accessibility",
+        "topicLabel": "Accessibility",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent guests report difficulties with accessibility due to stairs and lack of elevators.",
+        "recentReviewCount": 4,
+        "historicalReviewCount": 22
+      }
+    ]
+  },
+  "823fb2499b4e37d99acb65e7198e75965d6496fd1c579f976205c0e6179206df": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "cleanliness",
+        "topicLabel": "Cleanliness",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests are increasingly reporting issues with room temperature and noise, affecting their comfort.",
+        "recentReviewCount": 49,
+        "historicalReviewCount": 133
+      },
+      {
+        "topicId": "bathroom",
+        "topicLabel": "Bathroom",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Issues with bathroom amenities and maintenance are being reported by guests.",
+        "recentReviewCount": 7,
+        "historicalReviewCount": 46
+      }
+    ]
+  },
+  "a036cbe1d9fbf9cba088075d1b4d966ee871df55aa4a58ba0da23c116c499052": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": []
+  },
+  "3216b1b7885bffdb336265a8de7322ba0cd477cfb3d4f99d19acf488f76a1941": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "wifi_internet",
+        "topicLabel": "WiFi & Internet",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent guests report slow WiFi and noise issues affecting their stay.",
+        "recentReviewCount": 3,
+        "historicalReviewCount": 11
+      },
+      {
+        "topicId": "bathroom",
+        "topicLabel": "Bathroom",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Guests have reported cleanliness issues and low water pressure in bathrooms.",
+        "recentReviewCount": 19,
+        "historicalReviewCount": 30
+      },
+      {
+        "topicId": "accessibility",
+        "topicLabel": "Accessibility",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "There are significant issues with accessibility accommodations not being met for guests.",
+        "recentReviewCount": 2,
+        "historicalReviewCount": 3
+      }
+    ]
+  },
+  "f2d8d9557208d58577e9df7ff34e42bf86fb5b10fdfae0c3040d14c374a2a2b9": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "cleanliness",
+        "topicLabel": "Cleanliness",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests increasingly report unclean rooms and poor housekeeping, with specific complaints about mold and stained furniture.",
+        "recentReviewCount": 2,
+        "historicalReviewCount": 57
+      }
+    ]
+  },
+  "7d027ef72c02eaa17af3c993fd5dba50d17b41a6280389a46c13c7e2c32a5b06": {
+    "generatedAt": "2026-04-13T00:00:00.000Z",
+    "alerts": [
+      {
+        "topicId": "cleanliness",
+        "topicLabel": "Cleanliness",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests are increasingly reporting issues with mold, mildew, and unclean rooms.",
+        "recentReviewCount": 29,
+        "historicalReviewCount": 189
+      },
+      {
+        "topicId": "parking",
+        "topicLabel": "Parking",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "watch",
+        "summary": "Recent reviews indicate increasing dissatisfaction with parking availability and access.",
+        "recentReviewCount": 2,
+        "historicalReviewCount": 34
+      },
+      {
+        "topicId": "checkin_checkout",
+        "topicLabel": "Check-in & Check-out",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests are experiencing delays and issues during check-in, leading to frustration.",
+        "recentReviewCount": 6,
+        "historicalReviewCount": 59
+      },
+      {
+        "topicId": "bathroom",
+        "topicLabel": "Bathroom",
+        "recentSentiment": "negative",
+        "trend": "worsening",
+        "severity": "urgent",
+        "summary": "Guests are reporting issues with cleanliness and functionality in bathrooms.",
+        "recentReviewCount": 6,
+        "historicalReviewCount": 68
+      }
+    ]
+  }
+}

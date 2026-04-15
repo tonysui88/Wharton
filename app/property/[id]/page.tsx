@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { loadProperties, getReviewsForProperty } from "@/lib/data";
+import { reviewStore } from "@/lib/store";
 import { analyzeProperty, getKnowledgeHealthColor, getKnowledgeHealthLabel } from "@/lib/analysis";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -8,9 +9,10 @@ import KnowledgeHealthScore from "@/components/KnowledgeHealthScore";
 import TopicCoverageMap from "@/components/TopicCoverageMap";
 import RatingAnalytics from "@/components/RatingAnalytics";
 import { generateHotelDisplayName } from "@/lib/utils";
+import { getPropertyAlerts } from "@/lib/sentiment-alerts";
 import {
   ArrowLeft, MapPin, AlertTriangle, Clock,
-  TrendingDown, PenLine, BarChart3, MessageSquare,
+  TrendingDown, PenLine, BarChart3, MessageSquare, Flame, TrendingUp, Star,
 } from "lucide-react";
 import ManagerNotifications from "@/components/ManagerNotifications";
 
@@ -47,6 +49,9 @@ export default async function PropertyDetailPage({ params }: Props) {
     rating: r.rating,
     acquisition_date: r.acquisition_date,
   }));
+
+  const sentimentAlerts = getPropertyAlerts(id).filter((a) => a.severity !== "none");
+  const liveReviews = reviewStore.getLiveReviewsForProperty(id);
 
   return (
     <div className="min-h-screen" style={{ background: "#faf8f5" }}>
@@ -137,6 +142,46 @@ export default async function PropertyDetailPage({ params }: Props) {
             >
               Prompt travelers to fill these →
             </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Trend alerts section */}
+      {sentimentAlerts.length > 0 && (
+        <div className="max-w-7xl mx-auto px-6 py-5">
+          <div className="bg-white rounded-2xl border border-[#e5e0d8] overflow-hidden">
+            <div className="px-5 py-3 border-b border-[#e5e0d8] flex items-center gap-2">
+              <Flame className="w-4 h-4 text-red-500" />
+              <h3 className="text-sm font-bold text-[#1a1a2e]">Trend Alerts — AI Review Analysis</h3>
+              <span className="text-xs text-gray-400 ml-1">Areas where guest sentiment has recently worsened</span>
+            </div>
+            <div className="divide-y divide-[#f0ede8]">
+              {sentimentAlerts.map((alert) => (
+                <div key={alert.topicId} className="px-5 py-3 flex items-start gap-4">
+                  <div className="flex-shrink-0 mt-0.5">
+                    {alert.severity === "urgent" ? (
+                      <span className="flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-red-50 text-red-600 border border-red-200">
+                        <Flame className="w-3 h-3" /> Urgent
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1 text-xs font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-600 border border-amber-200">
+                        <TrendingDown className="w-3 h-3" /> Watch
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-[#1a1a2e]">{alert.topicLabel}</p>
+                    {alert.summary && (
+                      <p className="text-sm text-gray-500 mt-0.5">{alert.summary}</p>
+                    )}
+                  </div>
+                  <div className="hidden sm:block text-right text-xs text-gray-400 flex-shrink-0">
+                    <p>{alert.recentReviewCount} recent mentions</p>
+                    <p>vs {alert.historicalReviewCount} historical</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -234,6 +279,54 @@ export default async function PropertyDetailPage({ params }: Props) {
                   </div>
                 )}
 
+                {/* Live reviews */}
+                {liveReviews.length > 0 && (
+                  <div className="bg-white rounded-2xl border border-[#e5e0d8] p-5">
+                    <h3 className="text-sm font-bold text-[#1a1a2e] mb-3 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block" />
+                      Live Reviews Today
+                      <span className="text-xs font-medium px-1.5 py-0.5 rounded-full bg-green-50 text-green-700 border border-green-200">
+                        {liveReviews.length}
+                      </span>
+                    </h3>
+                    <div className="space-y-3">
+                      {liveReviews.map((r) => (
+                        <div key={r.id} className="border-b border-gray-50 last:border-0 pb-3 last:pb-0">
+                          <div className="flex items-center justify-between mb-1">
+                            <p className="text-xs font-semibold text-[#1a1a2e]">{r.travelerName}</p>
+                            <p className="text-xs text-gray-400">
+                              {new Date(r.submittedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-0.5 mb-1">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <Star
+                                key={i}
+                                className={`w-3 h-3 ${i < r.overallRating ? "fill-amber-400 text-amber-400" : "fill-gray-100 text-gray-100"}`}
+                              />
+                            ))}
+                          </div>
+                          {r.reviewText && (
+                            <p className="text-xs text-gray-500 italic line-clamp-2">
+                              &ldquo;{r.reviewText}&rdquo;
+                            </p>
+                          )}
+                          {r.answers.length > 0 && (
+                            <div className="mt-1.5 space-y-1">
+                              {r.answers.map((a) => (
+                                <div key={a.topicId} className="text-xs">
+                                  <span className="text-gray-400">{a.topicLabel}: </span>
+                                  <span className="text-gray-600">{a.answer}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Policies */}
                 <div className="bg-white rounded-2xl border border-[#e5e0d8] p-5">
                   <h3 className="text-sm font-bold text-[#1a1a2e] mb-3">Property Policies</h3>
@@ -291,7 +384,7 @@ export default async function PropertyDetailPage({ params }: Props) {
                       {healthLabel} · {analysis.knowledgeHealthScore}/100
                     </Badge>
                   </div>
-                  <TopicCoverageMap topics={analysis.topics} />
+                  <TopicCoverageMap topics={analysis.topics} reviews={reviews} />
                 </div>
               </div>
 

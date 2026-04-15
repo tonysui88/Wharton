@@ -179,17 +179,26 @@ function detectSentimentShift(reviews: Review[], topicSets: Set<string>[], topic
   return Math.abs(recentNegRatio - olderNegRatio) > 0.3;
 }
 
-// Module-level cache - populated once per cold start
-const _analysisCache = new Map<string, PropertyAnalysis>();
+// Use globalThis so the cache survives Next.js HMR and is shared across all
+// module instances in the same process (API routes + page renders).
+declare global {
+  // eslint-disable-next-line no-var
+  var _analysisCache: Map<string, PropertyAnalysis> | undefined;
+}
+
+const _analysisCache: Map<string, PropertyAnalysis> =
+  globalThis._analysisCache ?? (globalThis._analysisCache = new Map());
 
 /** Call after adding a live review so the next analyzeProperty call recomputes. */
 export function invalidateAnalysisCache(propertyId: string): void {
   _analysisCache.delete(propertyId);
 }
 
-export function analyzeProperty(property: Property, reviews: Review[]): PropertyAnalysis {
-  const cached = _analysisCache.get(property.eg_property_id);
-  if (cached) return cached;
+export function analyzeProperty(property: Property, reviews: Review[], skipCache = false): PropertyAnalysis {
+  if (!skipCache) {
+    const cached = _analysisCache.get(property.eg_property_id);
+    if (cached) return cached;
+  }
 
   const reviewsWithText = reviews.filter((r) => r.review_text && r.review_text.trim().length > 0);
 

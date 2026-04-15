@@ -100,6 +100,16 @@ export function checkAnswerQuality(
   // Preset options are always valid
   if (type === "yes_no" || type === "multiple_choice") return true;
 
+  // Likert-scale answers (agreement or quality) are valid even as single words
+  const LIKERT_VALUES = new Set([
+    "strongly disagree", "disagree", "neutral", "agree", "strongly agree",
+    "very poor", "poor", "average", "good", "excellent",
+  ]);
+  if (LIKERT_VALUES.has(trimmed.toLowerCase())) return true;
+  // Likert with elaboration (e.g. "Agree — great WiFi" or "Good — loved the pool")
+  const likertPrefix = trimmed.toLowerCase().split(/\s*[—–-]\s*/)[0].trim();
+  if (LIKERT_VALUES.has(likertPrefix)) return true;
+
   // Free-text: at least 2 words, some char diversity
   const words = trimmed.split(/\s+/).filter(Boolean);
   if (words.length < 2) return false;

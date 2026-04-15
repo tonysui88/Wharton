@@ -138,7 +138,7 @@ export default function RatingAnalytics({ reviews }: RatingAnalyticsProps) {
               {ratingLabel(overallStats.avg)} overall
             </p>
             <p className="text-gray-400 text-sm mt-0.5">
-              Based on {overallStats.count.toLocaleString()} rated reviews
+              Based on <span translate="no">{overallStats.count.toLocaleString()}</span>{" "}rated reviews
               &nbsp;·&nbsp;
               {Math.round(overallStats.coverageRate * 100)}% of all reviews include an overall score
             </p>

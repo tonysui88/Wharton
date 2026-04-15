@@ -32,7 +32,7 @@ export default function ReviewLandingPage() {
       starRating: p.star_rating,
       guestRating: p.guestrating_avg_expedia,
       topGapCount: analysis.topGaps.length,
-      healthScore: analysis.knowledgeHealthScore,
+      healthScore: analysis.coverageScore,
     };
   });
 

@@ -17,7 +17,9 @@ import crypto from "crypto";
 import { Property, Review, parseReviewDate } from "@/lib/data";
 import { TOPICS } from "@/lib/topics";
 import { classifyTextsBatchML } from "./topic-classifier";
-import { getAspectSentiments, aggregateSentimentScore, type ReviewAspectSentiment } from "./absa";
+import { setAbsaScores } from "./absa-cache";
+import { aggregateTopicSentiment } from "./local-absa";
+import { getEmbeddings } from "./embeddings";
 
 // ── Rich descriptions for ABSA prompts (same map as topic-classifier) ─────────
 // Duplicated here to keep the ABSA context self-contained without a circular dep.
@@ -66,8 +68,8 @@ export interface MLTopicResult {
   mlTopicScore: number;    // 0–1
   keywordTopicScore: number; // 0–1 (from existing system for comparison)
 
-  // Top evidence quotes
-  evidence: { text: string; sentiment: ReviewAspectSentiment["sentiment"]; score: number }[];
+  // Top sentences that drove the sentiment score (topic-relevant sentences)
+  evidence: { text: string; score: number }[];
 
   // Freshness (unchanged, dates don't change)
   freshnessDays: number | null;
@@ -196,26 +198,26 @@ export async function analyzePropertyML(
     }
   }
 
-  // ── Step 2: ABSA, run in parallel across all relevant topics ─────────────
+  // ── Step 2: Local ABSA — MiniLM relevance filtering + DistilBERT sentiment ─
+  // Pre-embed all topic descriptions once (reuses cached embeddings from topic-classifier)
+  const topicDescriptions = TOPICS.map((t) => TOPIC_DESCRIPTIONS[t.id] ?? t.label);
+  const topicDescEmbeddings = await getEmbeddings(topicDescriptions);
+  const topicEmbeddingMap: Record<string, number[]> = {};
+  for (let i = 0; i < TOPICS.length; i++) {
+    topicEmbeddingMap[TOPICS[i].id] = topicDescEmbeddings[i];
+  }
+
   const relevantTopics = TOPICS.filter((t) => isAmenityRelevant(property, t.amenityKeys));
 
-  const absa = await Promise.all(
-    relevantTopics.map(async (topic) => {
-      const topicTexts = mlTextsByTopic[topic.id].slice(0, MAX_REVIEWS_TO_ANALYZE);
-      if (topicTexts.length === 0) return { topicId: topic.id, results: [] };
-      const results = await getAspectSentiments(
-        topic.id,
-        topic.label,
-        TOPIC_DESCRIPTIONS[topic.id] ?? topic.label,
-        topicTexts
-      );
-      return { topicId: topic.id, results };
-    })
-  );
-
-  const absaByTopic: Record<string, ReviewAspectSentiment[]> = {};
-  for (const { topicId, results } of absa) {
-    absaByTopic[topicId] = results;
+  // Run local ABSA per topic — no API calls
+  const absaScoreByTopic: Record<string, { score: number; reviewCount: number }> = {};
+  for (const topic of relevantTopics) {
+    const topicTexts = mlTextsByTopic[topic.id].slice(0, MAX_REVIEWS_TO_ANALYZE);
+    if (topicTexts.length === 0) {
+      absaScoreByTopic[topic.id] = { score: 0.5, reviewCount: 0 };
+      continue;
+    }
+    absaScoreByTopic[topic.id] = await aggregateTopicSentiment(topicTexts, topicEmbeddingMap[topic.id]);
   }
 
   // ── Step 3: Compute per-topic ML scores ───────────────────────────────────
@@ -255,15 +257,15 @@ export async function analyzePropertyML(
     // Coverage (using ML count)
     const coverageScore = Math.min(1, mlCount / 10);
 
-    // Sentiment
+    // Sentiment — from local ABSA (MiniLM + DistilBERT, no API)
     const kwSentScore = keywordSentimentScore(kwReviews.map((r) => r.review_text));
-    const absaResults = absaByTopic[topic.id] ?? [];
-    const mlSentScore = absaResults.length > 0 ? aggregateSentimentScore(absaResults) : (mlCount > 0 ? 0.5 : 0.5);
+    const absaResult = absaScoreByTopic[topic.id] ?? { score: 0.5, reviewCount: 0 };
+    const mlSentScore = absaResult.score;
     const sentimentDelta = mlSentScore - kwSentScore;
 
     if (Math.abs(sentimentDelta) > 0.1) sentimentCorrected++;
 
-    // Categorical sentiment label from ABSA scores
+    // Categorical sentiment label
     let mlSentiment: MLTopicResult["mlSentiment"] = "unknown";
     if (mlCount > 0) {
       if (mlSentScore >= 0.6) mlSentiment = "positive";
@@ -277,23 +279,15 @@ export async function analyzePropertyML(
         : coverageScore * 0.35 + freshnessScore * 0.35 + mlSentScore * 0.30
       : 1;
 
-    // Keyword topic score for comparison (approximate, freshness same, keyword coverage + sentiment)
+    // Keyword topic score for comparison
     const kwCoverageScore = Math.min(1, keywordCount / 10);
     const keywordTopicScore = isRelevant
       ? keywordCount === 0 ? 0
         : kwCoverageScore * 0.35 + freshnessScore * 0.35 + kwSentScore * 0.30
       : 1;
 
-    // Top evidence quotes from ABSA (exclude not_mentioned, take highest confidence)
-    const evidence = absaResults
-      .filter((r) => r.sentiment !== "not_mentioned" && r.evidence)
-      .sort((a, b) => b.confidence - a.confidence)
-      .slice(0, 3)
-      .map((r) => ({
-        text: r.evidence,
-        sentiment: r.sentiment,
-        score: r.score,
-      }));
+    // No per-sentence evidence in local mode (sentences are internal to local-absa)
+    const evidence: { text: string; score: number }[] = [];
 
     return {
       topicId: topic.id,
@@ -316,6 +310,13 @@ export async function analyzePropertyML(
       lastMentionDate,
     };
   });
+
+  // ── Step 3b: Persist ABSA scores so analyzeProperty can use them ─────────
+  // Only write scores for topics that had actual ABSA results (score != 0.5 default)
+  setAbsaScores(
+    property.eg_property_id,
+    topicResults.map((t) => ({ topicId: t.topicId, score: t.mlSentimentScore }))
+  );
 
   // ── Step 4: Aggregate health scores ───────────────────────────────────────
   const relevantResults = topicResults.filter((t) => t.isRelevant);

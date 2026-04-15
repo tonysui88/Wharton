@@ -24,7 +24,7 @@ export async function GET() {
         guestrating_avg_expedia: property.guestrating_avg_expedia,
         popular_amenities_list: property.popular_amenities_list,
         property_description: property.property_description,
-        knowledgeHealthScore: analysis.knowledgeHealthScore,
+        coverageScore: analysis.coverageScore,
         totalReviews: analysis.totalReviews,
         reviewsWithText: analysis.reviewsWithText,
         topGaps: analysis.topGaps.slice(0, 3),

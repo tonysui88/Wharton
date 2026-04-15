@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { loadProperties, getReviewsForProperty } from "@/lib/data";
-import { analyzeProperty, getKnowledgeHealthColor } from "@/lib/analysis";
+import { analyzeProperty, getCoverageColor } from "@/lib/analysis";
 import { generateHotelDisplayName } from "@/lib/utils";
 import { ArrowRight, MapPin, ArrowLeft } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
 function ScoreBadge({ score }: { score: number }) {
-  const color = getKnowledgeHealthColor(score);
+  const color = getCoverageColor(score);
   const bg = score >= 70 ? "#f0fdf4" : score >= 40 ? "#fffbeb" : "#fef2f2";
   return (
     <div className="w-11 h-11 rounded-xl font-extrabold text-sm flex items-center justify-center flex-shrink-0"
@@ -27,7 +27,7 @@ export default function DebugPage() {
         id: p.eg_property_id,
         name: generateHotelDisplayName(p.property_description, p.city, p.country, p.star_rating),
         location: [p.city, p.province, p.country].filter(Boolean).join(", "),
-        healthScore: analysis.knowledgeHealthScore,
+        healthScore: analysis.coverageScore,
         totalReviews: analysis.totalReviews,
         guestRating: p.guestrating_avg_expedia,
       };

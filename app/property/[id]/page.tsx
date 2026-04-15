@@ -2,11 +2,11 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { loadProperties, getReviewsForProperty } from "@/lib/data";
 import { reviewStore } from "@/lib/store";
-import { analyzeProperty, getKnowledgeHealthColor, getKnowledgeHealthLabel } from "@/lib/analysis";
+import { analyzeProperty, getCoverageColor, getCoverageLabel } from "@/lib/analysis";
 import { generateHotelDisplayName } from "@/lib/utils";
 import { getPropertyAlerts } from "@/lib/sentiment-alerts";
 import { getLearnedWeights, learnPropertyWeights } from "@/lib/ml/continuous-learning";
-import KnowledgeHealthScore from "@/components/KnowledgeHealthScore";
+import CoverageScore from "@/components/CoverageScore";
 import {
   MapPin, Star, AlertTriangle, TrendingUp, MessageSquare,
   Users, BarChart3, ChevronRight, Flame, CheckCircle2,
@@ -63,8 +63,8 @@ export default async function PropertyOverviewPage({ params }: Props) {
     property.star_rating
   );
   const location = [property.city, property.province, property.country].filter(Boolean).join(", ");
-  const healthColor = getKnowledgeHealthColor(analysis.knowledgeHealthScore);
-  const healthLabel = getKnowledgeHealthLabel(analysis.knowledgeHealthScore);
+  const healthColor = getCoverageColor(analysis.coverageScore);
+  const healthLabel = getCoverageLabel(analysis.coverageScore);
   const sentimentAlerts = getPropertyAlerts(id).filter((a) => a.severity !== "none");
   const liveReviews = reviewStore.getLiveReviewsForProperty(id);
   const highGaps = analysis.topGaps.filter((g) => g.gap === "high");
@@ -114,8 +114,8 @@ export default async function PropertyOverviewPage({ params }: Props) {
 
           {/* KHS ring */}
           <div className="flex flex-col items-center gap-1 flex-shrink-0">
-            <KnowledgeHealthScore score={analysis.knowledgeHealthScore} size="lg" showLabel />
-            <p className="text-xs text-white/50 text-center">Knowledge Health</p>
+            <CoverageScore score={analysis.coverageScore} size="lg" showLabel />
+            <p className="text-xs text-white/50 text-center">Coverage Score</p>
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@ export default async function PropertyOverviewPage({ params }: Props) {
         <StatCard
           icon={<BarChart3 className="w-4 h-4" />}
           label="Health score"
-          value={analysis.knowledgeHealthScore}
+          value={analysis.coverageScore}
           sub={healthLabel}
           color={healthColor}
         />

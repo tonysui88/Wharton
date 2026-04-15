@@ -65,7 +65,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       questions,
-      currentScore: analysis.knowledgeHealthScore,
+      currentScore: analysis.coverageScore,
       gaps: gaps.slice(0, 5),
     });
   } catch (err) {

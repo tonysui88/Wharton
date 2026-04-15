@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getKnowledgeHealthColor, getKnowledgeHealthLabel } from "@/lib/health-utils";
+import { getCoverageColor, getCoverageLabel } from "@/lib/health-utils";
 
-interface KnowledgeHealthScoreProps {
+interface CoverageScoreProps {
   score: number;
   size?: "sm" | "md" | "lg";
   animated?: boolean;
@@ -16,16 +16,16 @@ const SIZES = {
   lg: { dim: 140, stroke: 9, r: 58, fontSize: "text-4xl font-bold" },
 };
 
-export default function KnowledgeHealthScore({
+export default function CoverageScore({
   score,
   size = "md",
   animated = true,
   showLabel = false,
-}: KnowledgeHealthScoreProps) {
+}: CoverageScoreProps) {
   const { dim, stroke, r, fontSize } = SIZES[size];
   const circumference = 2 * Math.PI * r;
-  const color = getKnowledgeHealthColor(score);
-  const label = getKnowledgeHealthLabel(score);
+  const color = getCoverageColor(score);
+  const label = getCoverageLabel(score);
 
   // Always start at actual score for SSR - no mismatch
   const [displayScore, setDisplayScore] = useState(score);

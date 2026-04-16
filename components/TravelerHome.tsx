@@ -1,19 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  MapPin, ArrowRight, LogOut, ChevronRight,
+  MapPin, ArrowRight, LogOut, ChevronRight, Search,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { DEMO_ACCOUNTS, TIER_COLORS, DemoAccount } from "@/lib/accounts";
 import { initAccountPoints } from "@/lib/levels";
+import { PropertyCard } from "@/components/ui/card-3";
 
 interface Hotel {
   id: string;
   name: string;
   location: string;
   guestRating: number;
+  imageUrl: string;
+  price: number;
+  reviewCount: number;
 }
 
 interface TravelerHomeProps {
@@ -155,12 +160,24 @@ function LoggedInView({
 // ── Landing page (not logged in) ──────────────────────────────────────────────
 
 function GuestLanding({
-  hotels: _hotels,
+  hotels,
   onSelectAccount,
 }: {
   hotels: Hotel[];
   onSelectAccount: (account: DemoAccount) => void;
 }) {
+  const [query, setQuery] = useState("");
+
+  const filtered = useMemo(() => {
+    const q = query.toLowerCase().trim();
+    if (!q) return hotels;
+    return hotels.filter(
+      (h) =>
+        h.name.toLowerCase().includes(q) ||
+        h.location.toLowerCase().includes(q)
+    );
+  }, [hotels, query]);
+
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "#F5F7FA" }}>
       {/* Header */}
@@ -176,31 +193,44 @@ function GuestLanding({
 
       {/* Hero */}
       <div style={{ background: "linear-gradient(160deg, #003580 0%, #006FCF 100%)" }}>
-        <div className="max-w-xl mx-auto px-4 py-14 text-center">
+        <div className="max-w-2xl mx-auto px-4 py-14 text-center">
           <h1 className="text-3xl font-extrabold text-white leading-tight mb-3">
-            How was your stay?
+            Find your next stay
           </h1>
-          <p className="text-white/70 text-sm max-w-xs mx-auto leading-relaxed">
-            Sign in with your Expedia account and we&apos;ll find your recent booking automatically.
+          <p className="text-white/70 text-sm max-w-sm mx-auto leading-relaxed mb-6">
+            Browse hotels worldwide, or sign in to review a recent booking.
           </p>
+          {/* Search bar */}
+          <div className="relative max-w-md mx-auto">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Search by city, country or hotel type…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-white text-sm text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-white/50 shadow-md"
+            />
+          </div>
         </div>
       </div>
 
-      <div className="max-w-xl mx-auto w-full px-4 -mt-5 pb-16">
-        {/* Account picker */}
-        <div className="bg-white rounded-2xl shadow-md border border-[#E4E7EF] overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full px-4 -mt-4 pb-20">
+        {/* Sign-in card */}
+        <div className="bg-white rounded-2xl shadow-md border border-[#E4E7EF] overflow-hidden mb-10">
           <div className="px-5 pt-5 pb-3 border-b border-[#E4E7EF]">
-            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sign in as</p>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+              Sign in to leave a review
+            </p>
           </div>
           <div className="divide-y divide-[#F5F7FA]">
             {DEMO_ACCOUNTS.map((account) => (
               <button
                 key={account.id}
                 onClick={() => onSelectAccount(account)}
-                className="w-full flex items-center gap-3 px-5 py-4 hover:bg-[#F5F7FA] transition-colors group text-left"
+                className="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-[#F5F7FA] transition-colors group text-left"
               >
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white text-sm flex-shrink-0"
+                  className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white text-sm flex-shrink-0"
                   style={{ background: "linear-gradient(135deg, #003580, #006FCF)" }}
                 >
                   {account.initial}
@@ -223,6 +253,42 @@ function GuestLanding({
           </div>
         </div>
 
+        {/* Hotel grid */}
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-lg font-bold text-[#1E243A]">
+            {query ? `${filtered.length} result${filtered.length !== 1 ? "s" : ""}` : `All Hotels`}
+          </h2>
+          <span className="text-xs text-gray-400">{hotels.length} properties worldwide</span>
+        </div>
+
+        {filtered.length === 0 ? (
+          <div className="text-center py-16 text-gray-400 text-sm">
+            No hotels match &ldquo;{query}&rdquo;
+          </div>
+        ) : (
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.05 } },
+            }}
+          >
+            {filtered.map((hotel) => (
+              <Link key={hotel.id} href={`/property/${hotel.id}`} className="block">
+                <PropertyCard
+                  imageUrl={hotel.imageUrl}
+                  name={hotel.name}
+                  location={hotel.location}
+                  price={hotel.price}
+                  rating={hotel.guestRating || 8.0}
+                  reviews={hotel.reviewCount}
+                  imageAlt={`${hotel.name} photo`}
+                />
+              </Link>
+            ))}
+          </motion.div>
+        )}
       </div>
 
       {/* Debug link */}

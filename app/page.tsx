@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Building2, User } from "lucide-react";
 import { MANAGER_ACCOUNTS, MANAGER_STORAGE_KEY, type ManagerAccount } from "@/lib/manager-accounts";
+import HeroSection from "@/components/HeroSection";
 
 export default function LandingPage() {
   const [manager, setManager] = useState<ManagerAccount | null>(null);
@@ -19,48 +20,46 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "#F5F7FA" }}>
 
-      {/* Nav */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center">
-          <img src="/Expedia-Logo.svg.png" alt="Expedia" className="h-9 w-auto" />
+      {/* Sticky minimal nav */}
+      <header className="bg-white/90 backdrop-blur border-b border-gray-200 sticky top-0 z-40">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <img src="/Expedia-Logo.svg.png" alt="Expedia" className="h-8 w-auto" />
+          <div className="flex items-center gap-3">
+            <Link
+              href="/hotels"
+              className="text-xs font-semibold text-gray-600 hover:text-[#003580] transition-colors"
+            >
+              For Travelers
+            </Link>
+            <Link
+              href="/manager"
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg text-white transition-all hover:opacity-90"
+              style={{ background: "#003580" }}
+            >
+              Hotel Dashboard
+            </Link>
+          </div>
         </div>
       </header>
 
-      {/* Hero */}
-      <div
-        className="w-full py-20 px-6 flex flex-col items-center text-center"
-        style={{
-          background: "linear-gradient(160deg, #003580 0%, #006FCF 100%)",
-        }}
-      >
-        <h1
-          className="text-5xl font-extrabold text-white mb-3 tracking-tight"
-          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-        >
-          CompleteStayz
-        </h1>
-        <p className="text-sm font-medium text-[#FFC72C] mb-5 tracking-wide italic">
-          A journey to better travel insights
-        </p>
-        <p className="text-lg text-white/80 max-w-xl leading-relaxed">
-          Smarter hotel reviews, for everyone. CompleteStayz uses AI to ask the right follow-up
-          questions, filling the gaps that standard reviews miss, so every stay is fully understood.
-        </p>
-      </div>
+      {/* Hero + Stats + Bento */}
+      <HeroSection />
 
       {/* Entry points */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-16">
-        <p className="text-sm font-medium text-gray-500 mb-8 uppercase tracking-widest">
-          Who are you?
+      <div
+        className="w-full flex flex-col items-center justify-center px-6 py-20"
+        style={{ background: "#F5F7FA" }}
+      >
+        <p className="text-xs font-semibold text-gray-400 mb-8 uppercase tracking-widest">
+          Choose your path
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 items-center">
-
           {/* Traveler */}
           <Link
             href="/hotels"
             className="flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-[#1E243A] transition-all hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow-md"
-            style={{ background: "#FFC72C", minWidth: 220 }}
+            style={{ background: "#FFC72C", minWidth: 230 }}
           >
             <User className="w-5 h-5 flex-shrink-0" />
             <span className="flex-1 text-left">I&apos;m a traveler</span>
@@ -71,7 +70,7 @@ export default function LandingPage() {
           <Link
             href="/manager"
             className="flex flex-col px-8 py-4 rounded-2xl font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow-md"
-            style={{ background: "#003580", minWidth: 220 }}
+            style={{ background: "#003580", minWidth: 230 }}
           >
             <div className="flex items-center gap-3">
               <Building2 className="w-5 h-5 flex-shrink-0" />
@@ -84,7 +83,6 @@ export default function LandingPage() {
               </p>
             )}
           </Link>
-
         </div>
       </div>
 

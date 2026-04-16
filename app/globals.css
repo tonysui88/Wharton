@@ -210,3 +210,17 @@
   transform-origin: center;
   transform: rotate(-90deg);
 }
+
+/* ── Radial Orbital Timeline & Flow Button extras ── */
+@keyframes orbit-ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+.animate-ping {
+  animation: orbit-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Flow button hover text-colour override for light contexts */
+.flow-btn-dark:hover {
+  color: white;
+}
